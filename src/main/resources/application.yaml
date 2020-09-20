@@ -1,0 +1,15 @@
+server:
+  port: 8189
+  servlet:
+    context-path: /market
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=market
+    username: postgres
+    password: 32167
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL94Dialect
