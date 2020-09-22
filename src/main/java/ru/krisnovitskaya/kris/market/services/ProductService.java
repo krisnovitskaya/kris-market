@@ -20,16 +20,39 @@ public class ProductService {
         return repository.findAll();
     }
 
-    public List<Product> findByPriceLessThanEqual(int max){
+    public List<Product> findAllByPriceLessThanEqual(int max){
         return  repository.findAllByPriceLessThanEqual(max);
     }
 
-    public List<Product> findByPriceGreaterThanEqual(int min){
+    public List<Product> findAllByPriceGreaterThanEqual(int min){
         return  repository.findAllByPriceGreaterThanEqual(min);
     }
 
     public List<Product> findAllByPriceLessThanEqualAndGreaterThanEqual(int min, int max){
         return repository.findAllByPriceLessThanEqualAndGreaterThanEqual(min, max);
+    }
+
+
+//
+    public List<Product> findAllLimit(int page){
+        int limit = 5;
+        return repository.findAllLimit(limit, page*limit);
+    }
+
+    public List<Product> findLessThanMaxPrice(int maxPrice, int page){
+        int limit = 5;
+        return repository.findLessThanMaxPrice(maxPrice, limit, page*limit);
+    }
+
+    public List<Product> findGreaterThanMinPrice(int minPrice, int page){
+        int limit = 5;
+        return repository.findGreaterThanMinPrice(minPrice, limit, page*limit);
+    }
+
+
+    public List<Product> findGreaterThanMinPriceAndLessThanMaxPrice(int minPrice, int maxPrice, int page){
+        int limit = 5;
+        return repository.findGreaterThanMinPriceAndLessThanMaxPrice(minPrice, maxPrice, limit, page*limit);
     }
 
 }
