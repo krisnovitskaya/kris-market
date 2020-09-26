@@ -7,9 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ru.krisnovitskaya.kris.market.entities.Product;
 import ru.krisnovitskaya.kris.market.services.ProductService;
 import ru.krisnovitskaya.kris.market.utils.ProductFilter;
@@ -37,6 +35,18 @@ public class ProductController {
         model.addAttribute("filterDefinition", productFilter.getFilterDefinition());
 
         return "products";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable Long id, Model model) {
+        model.addAttribute("product", service.getOne(id));
+        return "edit_product";
+    }
+
+    @PostMapping("/edit")
+    public String editProduct(@ModelAttribute Product editedProduct) {
+        service.save(editedProduct);
+        return "redirect:/prod/";
     }
 
 

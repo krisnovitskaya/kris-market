@@ -43,6 +43,7 @@
             <th>ID</th>
             <th>Название</th>
             <th>Цена</th>
+            <th>Действие</th>
         </tr>
         </thead>
         <tbody>
@@ -50,6 +51,9 @@
             <td th:text="${p.id}"/>
             <td th:text="${p.title}"/>
             <td th:text="${p.price}"/>
+            <td>
+                <a class="btn btn-danger" th:href="@{'/prod/edit/' + ${p.id}}">Изменить</a>
+            </td>
         </tr>
         </tbody>
     </table>
