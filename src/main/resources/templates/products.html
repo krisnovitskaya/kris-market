@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8"/>
 
-    <title>Товары</title>
+    <title>Каталог товаров</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -16,6 +16,27 @@
 <div class="container">
 
     <h1>Каталог товаров</h1>
+
+    <h3>Фильтр</h3>
+    <form method="get" th:action="@{/prod}">
+        <div class="form-group col-md-6">
+            <label for="titleInput">Название</label>
+            <input class="form-control" th:value="${param.title != null ? param.title : null}" name="title" type="text" id="titleInput">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="minPriceInput">Минимальная цена</label>
+            <input class="form-control" th:value="${param.min_price != null ? param.min_price : null}" name="min_price" type="number" id="minPriceInput">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="maxPriceInput">Максимальная цена</label>
+            <input class="form-control" th:value="${param.max_price != null ? param.max_price : null}" name="max_price" type="number" id="maxPriceInput">
+        </div>
+
+        <button class="btn btn-primary" type="submit">Применить</button>
+        <a class="btn btn-primary" th:href="@{/products}">Очистить фильтр</a>
+    </form>
+
+    <br>
     <table class="table table-hover">
         <thead class="thead-dark">
         <tr>
@@ -32,6 +53,25 @@
         </tr>
         </tbody>
     </table>
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li class="page-item" th:classappend="${products.isFirst() ? 'disabled' : ''}">
+                <a class="page-link"
+                   th:href="@{'/prod?p=' + ${products.previousOrFirstPageable().getPageNumber() + 1} + ${filterDefinition}}">Назад</a>
+            </li>
+
+            <li class="page-item" th:classappend="${products.getNumber() + 1 == i ? 'active' : ''}"
+                th:each="i : ${#numbers.sequence(1, products.getTotalPages())}">
+                <a class="page-link" th:text="${i}" th:href="@{'/prod?p=' + ${i} + ${filterDefinition}}"></a>
+            </li>
+
+            <li class="page-item"  th:classappend="${products.isLast() ? 'disabled' : ''}">
+                <a class="page-link"
+                   th:href="@{'/prod?p='+ ${products.nextOrLastPageable().getPageNumber() + 1} + ${filterDefinition}}">Вперед</a>
+            </li>
+        </ul>
+    </nav>
 </div>
 
 </body>
