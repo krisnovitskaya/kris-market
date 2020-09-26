@@ -33,7 +33,7 @@
         </div>
 
         <button class="btn btn-primary" type="submit">Применить</button>
-        <a class="btn btn-primary" th:href="@{/products}">Очистить фильтр</a>
+        <a class="btn btn-primary" th:href="@{/prod}">Очистить фильтр</a>
     </form>
 
     <br>
@@ -63,7 +63,7 @@
 
             <li class="page-item" th:classappend="${products.getNumber() + 1 == i ? 'active' : ''}"
                 th:each="i : ${#numbers.sequence(1, products.getTotalPages())}">
-                <a class="page-link" th:text="${i}" th:href="@{'/prod?p=' + ${i} + ${filterDefinition}}"></a>
+                <a class="page-link" th:if="${(i <= products.getNumber() + 3) && (i >= products.getNumber() - 1)}"  th:text="${i}" th:href="@{'/prod?p=' + ${i} + ${filterDefinition}}"></a>
             </li>
 
             <li class="page-item"  th:classappend="${products.isLast() ? 'disabled' : ''}">

@@ -23,8 +23,6 @@ import java.util.Map;
 public class ProductController {
     private ProductService service;
 
-
-
     @GetMapping
     public String showAllProducts(Model model,
                                   @RequestParam(defaultValue = "1", name = "p") Integer page,
@@ -37,6 +35,7 @@ public class ProductController {
         Page<Product> products = service.findAll(productFilter.getSpec(), page - 1, 5);
         model.addAttribute("products", products);
         model.addAttribute("filterDefinition", productFilter.getFilterDefinition());
+
         return "products";
     }
 
