@@ -40,7 +40,15 @@
         </tr>
         </tbody>
     </table>
-    <a class="btn btn-success" th:href="@{'products'}">Оформить заказ</a>
+    <div class="container">
+        <form method="POST" th:action="@{'/orders/make_order'}">
+            <input type="text" name="customer_name" placeholder="name">
+            <input type="number" name="customer_phone" placeholder="phone">
+            <input type="text" name="customer_address" placeholder="address">
+            <button class="btn btn-success " type="submit">Оформить заказ</button>
+        </form>
+    </div>
+
 </div>
 
 </body>

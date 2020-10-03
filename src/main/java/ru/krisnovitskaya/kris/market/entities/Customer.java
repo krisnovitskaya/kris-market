@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
 
+
+//не используется
 @Entity
 @Table(name = "customers")
 @Data
@@ -18,7 +20,4 @@ public class Customer {
 
     @Column(name = "name")
     private String name;
-
-    @OneToMany(mappedBy = "customer")
-    private List<Order> orders;
 }

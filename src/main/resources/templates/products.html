@@ -69,7 +69,8 @@
             <li class="page-item" th:classappend="${products.getNumber() + 1 == i ? 'active' : ''}"
                 th:each="i : ${#numbers.sequence(
                 (products.getNumber() - 1 > 0 ? products.getNumber() - 1 : 1),
-                (products.getNumber() + 3 < products.getTotalPages() ? products.getNumber() + 3  : products.getTotalPages())
+                (products.getNumber() + 3 < products.getTotalPages() ? products.getNumber() + 3  : products.getTotalPages()),
+                1
                 )}">
                 <a class="page-link" th:text="${i}" th:href="@{'/products?p=' + ${i} + ${filterDefinition}}"></a>
             </li>

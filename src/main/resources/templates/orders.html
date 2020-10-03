@@ -21,16 +21,16 @@
         <tr>
             <th>ID</th>
             <th>Клиент</th>
-            <th>Товар</th>
             <th>Цена</th>
+            <th>Количество позиций в заказе</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="o : ${orders}">
             <td th:text="${o.id}"/>
-            <td th:text="${o.customer.name}"/>
-            <td th:text="${o.product.title}"/>
-            <td th:text="${o.currentPrice}"/>
+            <td th:text="${o.customerName}"/>
+            <td th:text="${o.price}"/>
+            <td th:text="${o.items.size()}"/>
         </tr>
         </tbody>
     </table>
