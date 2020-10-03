@@ -30,12 +30,7 @@
         <tbody>
         <tr th:each="oi : ${@cart.items}">
             <td th:text="${oi.product.title}"/>
-            <td>
-                <a class="btn btn-danger" th:href="@{'/cart/dec/' + ${oi.product.id}}">-</a>
-                <span th:text="${oi.quantity}"/>
-                <a class="btn btn-success" th:href="@{'/cart/inc/' + ${oi.product.id}}">+</a>
-                <a class="btn btn-danger" th:href="@{'/cart/remove/' + ${oi.product.id}}">X</a>
-            </td>
+            <td th:text="${oi.quantity}"/>
             <td th:text="${oi.quantity + ' x ' + oi.pricePerProduct + ' = ' + oi.price}"/>
         </tr>
         <tr>
@@ -45,7 +40,7 @@
         </tr>
         </tbody>
     </table>
-    <a class="btn btn-success" th:href="@{'/orders/new'}">Оформить заказ</a>
+    <a class="btn btn-success" th:href="@{'products'}">Оформить заказ</a>
 </div>
 
 </body>
