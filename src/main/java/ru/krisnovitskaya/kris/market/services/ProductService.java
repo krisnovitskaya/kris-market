@@ -17,18 +17,21 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class ProductService {
-    private ProductRepository repository;
+    private ProductRepository productRepository;
 
-    public void save(Product editedProduct){
-        repository.save(editedProduct);
+    public Optional<Product> findById(Long id) {
+        return productRepository.findById(id);
     }
 
-    public Product getOne(Long id){
-        return repository.getOne(id);
+    public void deleteById(Long id) {
+        productRepository.deleteById(id);
     }
 
     public Page<Product> findAll(Specification<Product> spec, int page, int size) {
-        return repository.findAll(spec, PageRequest.of(page, size));
+        return productRepository.findAll(spec, PageRequest.of(page, size));
     }
 
+    public Product saveOrUpdate(Product product) {
+        return productRepository.save(product);
+    }
 }

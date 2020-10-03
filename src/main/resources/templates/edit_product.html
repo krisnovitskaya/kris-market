@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8"/>
 
-    <title>Редактировать продукт</title>
+    <title>Работа с товарами</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -12,31 +13,37 @@
 </head>
 
 <body>
-    <h1>Изменить данные продукта</h1>
-    <form th:action="@{/prod/edit}" th:object="${product}" method="POST">
-        <div class="form-inline">
-            <input hidden th:field="*{id}"/>
-        </div>
-        <div class="form-inline mx-sm-3">
-            <label for="title" class="sr-only">title</label>
-            <div class="col-sm-10">
-                <input type="text"  class="form-control" id="title" th:field="*{title}">
+
+<div class="container">
+    <div th:replace="~{navigation :: navigation(Products)}" />
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <header class="card-header">
+                    <h4 class="card-title mt-2"><span>Изменение товара</span></h4>
+                </header>
+                <article class="card-body">
+                    <form th:action="@{/products/edit}" th:object="${product}" method="POST">
+                        <input th:field="*{id}" type="hidden" class="form-control">
+                        <div class="form-row">
+                            <div class="col form-group">
+                                <label>Наименование</label>
+                                <input th:field="*{title}" type="text" class="form-control" placeholder="Название">
+                            </div>
+                            <div class="col form-group">
+                                <label>Цена</label>
+                                <input th:field="*{price}" type="number" class="form-control" placeholder="Цена">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block">Сохранить</button>
+                        </div>
+                    </form>
+                </article>
             </div>
         </div>
-        <div class="form-inline mx-sm-3">
-            <label for="price" class="sr-only">price</label>
-            <div class="col-sm-10">
-                <input type="number" class="form-control" id="price" th:field="*{price}">
-            </div>
-        </div>
-        <br>
-        <div class="form-inline mx-sm-3">
-            <button type="submit" class="btn btn-primary">Изменить</button>
-        </div>
-    </form>
-
-
-
-
+    </div>
+</div>
 </body>
 </html>
