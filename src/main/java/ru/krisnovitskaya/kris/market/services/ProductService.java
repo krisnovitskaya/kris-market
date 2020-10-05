@@ -27,6 +27,10 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
+    public void deleteAll() {
+        productRepository.deleteAll();
+    }
+
     public Page<Product> findAll(Specification<Product> spec, int page, int size) {
         return productRepository.findAll(spec, PageRequest.of(page, size));
     }
