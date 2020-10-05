@@ -5,8 +5,10 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.*;
 import ru.krisnovitskaya.kris.market.entities.Product;
 import ru.krisnovitskaya.kris.market.services.ProductService;
+import ru.krisnovitskaya.kris.market.utils.ProductFilter;
 
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -18,6 +20,13 @@ public class RestProductController {
     @GetMapping // /api/v1/products
     public List<Product> getAllProducts() {
         return productService.findAll(Specification.where(null), 0, 10).getContent();
+    }
+
+    @GetMapping("/prod") // /api/v1/products/prod
+    public List<Product> getAll( @RequestParam Map<String, String> params){
+        ProductFilter productFilter = new ProductFilter(params);
+        List<Product> products = productService.getAll(productFilter.getSpec());
+        return products;
     }
 
     @GetMapping("/{id}")

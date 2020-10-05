@@ -10,6 +10,7 @@ import ru.krisnovitskaya.kris.market.entities.Product;
 import ru.krisnovitskaya.kris.market.repositories.ProductRepository;
 import ru.krisnovitskaya.kris.market.repositories.specifications.ProductSpecifications;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -29,6 +30,10 @@ public class ProductService {
 
     public void deleteAll() {
         productRepository.deleteAll();
+    }
+
+    public List<Product> getAll(Specification<Product> spec) {
+        return productRepository.findAll(spec);
     }
 
     public Page<Product> findAll(Specification<Product> spec, int page, int size) {

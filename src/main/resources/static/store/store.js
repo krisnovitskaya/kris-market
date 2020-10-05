@@ -1,6 +1,7 @@
 angular.module('app').controller('storeController', function ($scope, $http) {
     const contextPath = 'http://localhost:8189/market';
 
+
     $scope.fillTable = function () {
         console.log('fill');
         $http.get(contextPath + '/api/v1/products')
@@ -9,15 +10,16 @@ angular.module('app').controller('storeController', function ($scope, $http) {
             });
     };
 
-    // $scope.applyFilter = function () {
-    //     $http({
-    //         url: contextPath + '/api/v1/books',
-    //         method: "GET",
-    //         params: {obj_title: $scope.obj.title, obj_price: $scope.obj.price}
-    //     }).then(function (response) {
-    //         ...
-    //     });
-    // }
+     $scope.applyFilter = function () {
+         $http({
+             url: contextPath + '/api/v1/products/prod',
+             method: "GET",
+             params: {title: $scope.productFilter.title, min_price: $scope.productFilter.minPrice, max_price: $scope.productFilter.maxPrice}
+         }).then(function (response) {
+             $scope.Products = response.data;
+         });
+     }
+
 
     $scope.submitCreateNewProduct = function () {
         $http.post(contextPath + '/api/v1/products', $scope.newProduct)
@@ -28,5 +30,8 @@ angular.module('app').controller('storeController', function ($scope, $http) {
             });
     };
 
+
+
     $scope.fillTable();
+
 });
