@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.krisnovitskaya.kris.market.entities.Order;
 import ru.krisnovitskaya.kris.market.entities.Role;
 import ru.krisnovitskaya.kris.market.entities.User;
 import ru.krisnovitskaya.kris.market.repositories.UserRepository;
@@ -40,5 +41,9 @@ public class UserService implements UserDetailsService {
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+    }
+
+    public User save(User user) {
+        return userRepository.save(user);
     }
 }

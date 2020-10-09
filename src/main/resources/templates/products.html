@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8"/>
 
-    <title>Каталог товаров</title>
+    <title>Регистрация</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -14,8 +14,8 @@
 <body>
 
 <div class="container">
-    <div th:replace="~{navigation :: navigation(Products)}" />
-    <h1>Каталог товаров</h1>
+    <div th:replace="~{navigation :: navigation(SignUp)}" />
+    <h1>Регистрация</h1>
 
     <h3>Фильтр</h3>
     <form method="get" th:action="@{/products}">
