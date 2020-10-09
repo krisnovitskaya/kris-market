@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.krisnovitskaya.kris.market.entities.Order;
 import ru.krisnovitskaya.kris.market.entities.OrderItem;
+import ru.krisnovitskaya.kris.market.entities.User;
 import ru.krisnovitskaya.kris.market.repositories.OrderRepository;
 
 import java.util.List;
@@ -21,4 +22,12 @@ public class OrderService {
     public Order save(Order order) {
         return orderRepository.save(order);
     }
+
+    public List<Order> findByUser(User user) {
+        return orderRepository.findAllByUser(user);
+    }
+
+//    public List<Order> findByUserName(String username) {
+//        return orderRepository.findAllByUserame(username);
+//    }
 }

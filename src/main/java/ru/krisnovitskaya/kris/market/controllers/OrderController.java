@@ -12,6 +12,7 @@ import ru.krisnovitskaya.kris.market.services.UserService;
 import ru.krisnovitskaya.kris.market.utils.Cart;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/orders")
@@ -22,8 +23,10 @@ public class OrderController {
     private Cart cart;
 
     @GetMapping
-    public String showOrders(Model model) {
-        model.addAttribute("orders", orderService.findAll());
+     public String showOrders(Model model, Principal principal) {
+        User user = userService.findByUsername(principal.getName());
+        List<Order> orders = orderService.findByUser(user);
+        model.addAttribute("orders", orders);
         return "orders";
     }
 
@@ -43,6 +46,7 @@ public class OrderController {
         User user = userService.findByUsername(principal.getName());
         Order order = new Order(user, cart, address);
         order = orderService.save(order);
+        order.print();
         return "Ваш заказ #" + order.getId();
     }
 }

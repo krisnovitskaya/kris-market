@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
+
 <head>
     <meta charset="utf-8"/>
 
@@ -14,8 +15,28 @@
 <body>
 
 <div class="container">
-    <div th:replace="~{navigation :: navigation(Orders)}"/>
-    <h1>В разработке!!!</h1>
+    <div th:replace="~{navigation :: navigation(Cart)}" />
+    <h1>Заказы</h1>
+
+    <br>
+    <span th:if="${orders.isEmpty()}">Список заказов пуст</span>
+    <table th:if="${!orders.isEmpty()}" class="table table-hover">
+        <thead class="thead-dark">
+        <tr>
+            <th>id</th>
+            <th>total price</th>
+            <th>address</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="o : ${orders}">
+            <td th:text="${o.id}"/>
+            <td th:text="${o.price}"/>
+            <td th:text="${o.address}"/>
+        </tr>
+        </tbody>
+    </table>
+    <a class="nav-link" th:href="@{/logout}">logout</a>
 </div>
 
 </body>
