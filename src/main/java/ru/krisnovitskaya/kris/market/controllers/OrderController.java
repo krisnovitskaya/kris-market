@@ -6,41 +6,43 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.krisnovitskaya.kris.market.entities.Order;
+import ru.krisnovitskaya.kris.market.entities.User;
 import ru.krisnovitskaya.kris.market.services.OrderService;
+import ru.krisnovitskaya.kris.market.services.UserService;
 import ru.krisnovitskaya.kris.market.utils.Cart;
+
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/orders")
 @AllArgsConstructor
 public class OrderController {
+    private UserService userService;
     private OrderService orderService;
     private Cart cart;
 
-
     @GetMapping
-    public String firstRequest(Model model) {
+    public String showOrders(Model model) {
         model.addAttribute("orders", orderService.findAll());
         return "orders";
     }
 
-    @GetMapping("/new")
-    public String newOrder(Model model){
-        return "new_order";
+    @GetMapping("/create")
+    public String showOrderPage(Principal principal, Model model) {
+        model.addAttribute("username", principal.getName());
+        return "create_order";
     }
 
-    @PostMapping("/make_order")
-    public String makeOrder(@RequestParam(name = "customer_name") String customerName, @RequestParam(name = "customer_phone") int customerPhone,
-                           @RequestParam(name = "customer_address") String customerAddress){
-        Order order = new Order();
-        order.setCustomerAddress(customerAddress);
-        order.setCustomerName(customerName);
-        order.setCustomerPhone(customerPhone);
-        order.setPrice(cart.getPrice());
-        order.setItems(cart.getItems());
-        orderService.saveOrUpdate(order);
-        cart.getItems().clear();
-        return "redirect:/orders";
+    @PostMapping("/confirm")
+    @ResponseBody
+    public String confirmOrder(Principal principal,
+                               @RequestParam(name = "address") String address,
+                               @RequestParam(name = "receiver_name") String receiverName,
+                               @RequestParam(name = "phone_number") String phone
+    ) {
+        User user = userService.findByUsername(principal.getName());
+        Order order = new Order(user, cart, address);
+        order = orderService.save(order);
+        return "Ваш заказ #" + order.getId();
     }
-
-
 }

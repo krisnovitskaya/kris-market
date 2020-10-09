@@ -14,26 +14,8 @@
 <body>
 
 <div class="container">
-    <div th:replace="~{navigation :: navigation(Orders)}" />
-    <h1>Каталог товаров</h1>
-    <table class="table table-hover">
-        <thead class="thead-dark">
-        <tr>
-            <th>ID</th>
-            <th>Клиент</th>
-            <th>Цена</th>
-            <th>Количество позиций в заказе</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="o : ${orders}">
-            <td th:text="${o.id}"/>
-            <td th:text="${o.customerName}"/>
-            <td th:text="${o.price}"/>
-            <td th:text="${o.items.size()}"/>
-        </tr>
-        </tbody>
-    </table>
+    <div th:replace="~{navigation :: navigation(Orders)}"/>
+    <h1>В разработке!!!</h1>
 </div>
 
 </body>
