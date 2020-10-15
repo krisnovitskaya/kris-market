@@ -1,6 +1,7 @@
 package ru.krisnovitskaya.kris.market.controllers;
 
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ru.krisnovitskaya.kris.market.entities.Order;
@@ -17,6 +18,7 @@ import java.security.Principal;
 public class UserController {
     private UserService userService;
     private RoleService roleService;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostMapping
     public String signUp(@RequestParam String username,
@@ -24,7 +26,7 @@ public class UserController {
                                @RequestParam String email
     ) {
         Role role = roleService.findByName("ROLE_USER");
-        User user = new User(username, password, email, role);
+        User user = new User(username, bCryptPasswordEncoder.encode(password), email, role);
         userService.save(user);
         return "redirect:/products";
     }

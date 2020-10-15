@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.krisnovitskaya.kris.market.entities.Order;
 import ru.krisnovitskaya.kris.market.entities.Role;
 import ru.krisnovitskaya.kris.market.entities.User;
 import ru.krisnovitskaya.kris.market.repositories.UserRepository;
@@ -19,6 +18,8 @@ import java.util.stream.Collectors;
 @Service
 public class UserService implements UserDetailsService {
     private UserRepository userRepository;
+
+
 
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
