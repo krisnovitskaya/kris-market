@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 import ru.krisnovitskaya.kris.market.entities.OrderItem;
 import ru.krisnovitskaya.kris.market.entities.Product;
+import ru.krisnovitskaya.kris.market.exceptions.ResourceNotFoundException;
+import ru.krisnovitskaya.kris.market.services.ProductService;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -17,9 +19,9 @@ import java.util.List;
 
 @Component
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
-@NoArgsConstructor
 @Data
 public class Cart {
+    private final ProductService productService;
     private List<OrderItem> items;
     private int price;
 
@@ -28,19 +30,7 @@ public class Cart {
         items = new ArrayList<>();
     }
 
-    public void addOrIncrement(Product p) {
-        for (OrderItem o : items) {
-            if (o.getProduct().getId().equals(p.getId())) {
-                o.incrementQuantity();
-                recalculate();
-                return;
-            }
-        }
-        items.add(new OrderItem(p));
-        recalculate();
-    }
-
-    public void incrementOnly(Long productId) {
+    public void addOrIncrement(Long productId) {
         for (OrderItem o : items) {
             if (o.getProduct().getId().equals(productId)) {
                 o.incrementQuantity();
@@ -48,6 +38,9 @@ public class Cart {
                 return;
             }
         }
+        Product p = productService.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Unable to find product with id: " + productId + " (add to cart)"));
+        items.add(new OrderItem(p));
+        recalculate();
     }
 
     public void decrementOrRemove(Long productId) {
@@ -80,6 +73,8 @@ public class Cart {
     public void recalculate() {
         price = 0;
         for (OrderItem o : items) {
+            o.setPricePerProduct(o.getProduct().getPrice());
+            o.setPrice(o.getProduct().getPrice() * o.getQuantity());
             price += o.getPrice();
         }
     }

@@ -5,12 +5,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.*;
 import ru.krisnovitskaya.kris.market.entities.Product;
+import ru.krisnovitskaya.kris.market.exceptions.ResourceNotFoundException;
 import ru.krisnovitskaya.kris.market.services.ProductService;
 import ru.krisnovitskaya.kris.market.utils.ProductFilter;
 
 import java.util.List;
 import java.util.Map;
-
 
 
 @RestController
@@ -19,7 +19,7 @@ import java.util.Map;
 public class RestProductController {
     private ProductService productService;
 
-    @GetMapping // /api/v1/products
+    @GetMapping(produces = "application/json") // /api/v1/products
     public Page<Product> getAllProducts(@RequestParam(defaultValue = "1", name = "p") Integer page,
                                         @RequestParam Map<String, String> params) {
         if (page < 1) {
@@ -30,18 +30,18 @@ public class RestProductController {
         return content;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", produces = "application/json")
     public Product getProductById(@PathVariable Long id) {
-        return productService.findById(id).get();
+        return productService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to find product with id: " + id));
     }
 
-    @PostMapping
+    @PostMapping(consumes = "application/json", produces = "application/json")
     public Product createProduct(@RequestBody Product p) {
         p.setId(null);
         return productService.saveOrUpdate(p);
     }
 
-    @PutMapping
+    @PutMapping(consumes = "application/json", produces = "application/json")
     public Product updateProduct(@RequestBody Product p) {
         return productService.saveOrUpdate(p);
     }

@@ -1,0 +1,28 @@
+<div>
+    <h3>Корзина</h3>
+    <table class="table table-hover" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>Название</td>
+            <td>Количество</td>
+            <td>Цена</td>
+        </tr>
+        <tbody>
+
+        <tr ng-repeat="oi in cart.items">
+            <td>{{oi.productTitle}}</td>
+            <td>
+                <button class="btn btn-success" ng-click="decrementItem(oi.productId)">-</button>
+                {{oi.quantity}}
+                <button class="btn btn-success" ng-click="incrementItem(oi.productId)">+</button>
+                <button class="btn btn-danger" ng-click="removeItem(oi.productId)">X</button>
+            </td>
+            <td>{{oi.pricePerProduct + ' * ' + oi.quantity + ' = ' + oi.price}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>Итоговая стоимость</td>
+            <td>{{cart.price}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

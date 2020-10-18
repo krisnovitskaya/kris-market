@@ -12,7 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ru.krisnovitskaya.kris.market.services.UserService;
 
 
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private UserService userService;
 
@@ -24,17 +24,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/orders/**").authenticated()
+//                .antMatchers("/orders/**").authenticated()
                 .anyRequest().permitAll()
                 .and()
-                .formLogin();
+                .formLogin()
+                .and()
+                .csrf().disable();
     }
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {

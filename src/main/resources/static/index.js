@@ -14,6 +14,14 @@
             .when('/store', {
                 templateUrl: 'store/store.html',
                 controller: 'storeController'
+            })
+            .when('/admin', {
+                templateUrl: 'admin/admin.html',
+                controller: 'adminController'
+            })
+            .when('/cart', {
+                templateUrl: 'cart/cart.html',
+                controller: 'cartController'
             });
     }
 })();

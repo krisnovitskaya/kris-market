@@ -41,11 +41,9 @@ public class OrderItem {
 
     public void incrementQuantity() {
         quantity++;
-        price = pricePerProduct * quantity;
     }
 
     public void decrementQuantity() {
         quantity--;
-        price = pricePerProduct * quantity;
     }
 }
