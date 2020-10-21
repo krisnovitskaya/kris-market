@@ -3,6 +3,7 @@ package ru.krisnovitskaya.kris.market.controllers;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import ru.krisnovitskaya.kris.market.entities.Product;
 import ru.krisnovitskaya.kris.market.exceptions.ResourceNotFoundException;
@@ -21,11 +22,12 @@ public class RestProductController {
 
     @GetMapping(produces = "application/json") // /api/v1/products
     public Page<Product> getAllProducts(@RequestParam(defaultValue = "1", name = "p") Integer page,
-                                        @RequestParam Map<String, String> params) {
+                                        @RequestParam MultiValueMap<String, String> params) {
         if (page < 1) {
             page = 1;
         }
         ProductFilter productFilter = new ProductFilter(params);
+        System.out.println(productFilter.getFilterDefinition());
         Page<Product> content = productService.findAll(productFilter.getSpec(), page - 1, 5);
         return content;
     }

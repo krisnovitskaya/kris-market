@@ -6,6 +6,7 @@ angular.module('app').controller('storeController', function ($scope, $http) {
             url: contextPath + '/api/v1/products',
             method: 'GET',
             params: {
+                categories: $scope.filter ? $scope.filter.categories : null,
                 title: $scope.filter ? $scope.filter.title : null,
                 min_price: $scope.filter ? $scope.filter.min_price : null,
                 max_price: $scope.filter ? $scope.filter.max_price : null,

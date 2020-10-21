@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import ru.krisnovitskaya.kris.market.entities.Product;
 import ru.krisnovitskaya.kris.market.exceptions.ResourceNotFoundException;
@@ -26,7 +27,7 @@ public class ProductController {
     @GetMapping
     public String showAllProducts(Model model,
                                   @RequestParam(defaultValue = "1", name = "p") Integer page,
-                                  @RequestParam Map<String, String> params
+                                  @RequestParam MultiValueMap<String, String> params
     ) {
         if (page < 1) {
             page = 1;

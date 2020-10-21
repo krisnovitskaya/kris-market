@@ -37,6 +37,26 @@ create table products (
     price                   int
 );
 
+create table categories (
+    id      bigserial,
+    name    varchar(150) not null,
+    primary key (id)
+);
+
+CREATE TABLE products_categories (
+  product_id               bigint not null,
+  category_id              bigint not null,
+  primary key (product_id, category_id),
+  foreign key (product_id) references products (id),
+  foreign key (category_id) references categories (id)
+);
+
+insert into categories (name)
+values
+('category 1'), ('category 2'), ('category 3'), ('category 4');
+
+
+
 create table orders (
     id                      bigserial primary key,
     user_id                 bigint references users(id),
@@ -96,3 +116,16 @@ values
 ('Beets 2', 199),
 ('Turnip 2', 145),
 ('Ginger 2', 300);
+
+insert into products_categories (product_id, category_id)
+values
+(1, 1), (2, 2), (3, 3), (4, 4),
+(5, 1), (6, 2), (7, 3), (8, 4),
+(9, 1), (10, 2), (11, 3), (12, 4),
+(13, 1), (14, 2), (15, 3), (16, 4),
+(17, 1), (18, 2), (19, 3), (20, 4),
+(21, 1), (22, 2), (23, 3), (24, 4),
+(25, 1), (26, 2), (27, 3), (28, 4),
+(29, 1), (30, 2), (31, 3), (32, 4),
+(33, 1), (34, 2), (35, 3), (36, 4),
+(37, 1), (38, 2), (39, 3), (40, 4);
