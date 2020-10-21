@@ -27,6 +27,7 @@ public class ProductSpecifications {
     public static Specification<Product> haveCategory(List<String> categories) {
         return new Specification<Product>() {
             public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                criteriaQuery.distinct(true);
                 Join<Product, Category> productCategoryJoin = root.join("categories");
                 return productCategoryJoin.get("name").in(categories);
             }
