@@ -16,8 +16,11 @@ angular.module('app').controller('storeController', function ($scope, $http) {
             .then(function (response) {
                 $scope.ProductsPage = response.data;
                 $scope.PaginationArray = $scope.generatePagesInd(1, $scope.ProductsPage.totalPages);
+                $scope.Categories = [{id:1,name:"category 1"}, {id:2,name:"category 2"}, {id:3,name:"category 3"}, {id:4,name:"category 4"}];
             });
     };
+
+
 
     $scope.addToCart = function (productId) {
         $http({
@@ -38,4 +41,5 @@ angular.module('app').controller('storeController', function ($scope, $http) {
     }
 
     $scope.fillTable();
+
 });

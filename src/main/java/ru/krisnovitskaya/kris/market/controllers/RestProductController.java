@@ -27,7 +27,6 @@ public class RestProductController {
             page = 1;
         }
         ProductFilter productFilter = new ProductFilter(params);
-        System.out.println(productFilter.getFilterDefinition());
         Page<Product> content = productService.findAll(productFilter.getSpec(), page - 1, 5);
         return content;
     }

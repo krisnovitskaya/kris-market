@@ -24,4 +24,6 @@
                 controller: 'cartController'
             });
     }
+
+
 })();

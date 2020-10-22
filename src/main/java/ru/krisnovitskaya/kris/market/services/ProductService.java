@@ -8,10 +8,9 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.krisnovitskaya.kris.market.entities.Product;
 import ru.krisnovitskaya.kris.market.repositories.ProductRepository;
-import ru.krisnovitskaya.kris.market.repositories.specifications.ProductSpecifications;
+
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 

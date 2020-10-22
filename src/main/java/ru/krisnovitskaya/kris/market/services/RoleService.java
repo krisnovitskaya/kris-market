@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import ru.krisnovitskaya.kris.market.entities.Role;
 import ru.krisnovitskaya.kris.market.repositories.RoleRepository;
 
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor

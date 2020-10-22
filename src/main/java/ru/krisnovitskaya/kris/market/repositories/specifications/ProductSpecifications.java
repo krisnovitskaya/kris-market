@@ -5,10 +5,7 @@ import ru.krisnovitskaya.kris.market.entities.Category;
 import ru.krisnovitskaya.kris.market.entities.Product;
 
 import javax.persistence.criteria.*;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 public class ProductSpecifications {
     public static Specification<Product> priceGreaterOrEqualsThan(int minPrice) {
