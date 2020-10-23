@@ -5,8 +5,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import ru.krisnovitskaya.kris.market.entities.Category;
 import ru.krisnovitskaya.kris.market.entities.Product;
 import ru.krisnovitskaya.kris.market.exceptions.ResourceNotFoundException;
+import ru.krisnovitskaya.kris.market.services.CategoryService;
 import ru.krisnovitskaya.kris.market.services.ProductService;
 import ru.krisnovitskaya.kris.market.utils.ProductFilter;
 
@@ -19,6 +21,12 @@ import java.util.Map;
 @AllArgsConstructor
 public class RestProductController {
     private ProductService productService;
+    private CategoryService categoryService;
+
+    @GetMapping(value = "/category", produces = "application/json")
+    public List<Category> getCategories(){
+        return categoryService.getAll();
+    }
 
     @GetMapping(produces = "application/json") // /api/v1/products
     public Page<Product> getAllProducts(@RequestParam(defaultValue = "1", name = "p") Integer page,

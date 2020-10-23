@@ -1,7 +1,7 @@
 <div>
     <h3>Фильтр</h3>
     <form novalidate ng-submit="fillTable()">
-
+<!--
         <label>Категория Продукта</label><br>
         <select multiple ng-model="filter.categories">
             <option value="category 1">category 1</option>
@@ -13,7 +13,14 @@
         <p>
             <tt> selected categories: {{filter.categories}}</tt>
         </p>
+-->
+        <label for="filterCategories">Категория Продукта</label><br>
+        <select class="multiselect" data-placeholder="Select Category"
+                ng-model="filter.categories" ng-options="category.name as category.name for category in Categories"
+                multiple="multiple" multiselect-dropdown  id="filterCategories">
 
+        </select>
+        <p>Выбраны категории: {{filter.categories}}</p>
 
 
         <div class="form-group col-md-6">

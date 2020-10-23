@@ -1,6 +1,16 @@
 angular.module('app').controller('storeController', function ($scope, $http) {
     const contextPath = 'http://localhost:8189/market';
 
+    $scope.getCategories = function() {
+            $http({
+                        url: contextPath + '/api/v1/products/category',
+                        method: 'GET'
+                    })
+                        .then(function (response) {
+                            $scope.Categories = response.data;
+                        });
+        }
+
     $scope.fillTable = function (pageIndex = 1) {
         $http({
             url: contextPath + '/api/v1/products',
@@ -16,7 +26,6 @@ angular.module('app').controller('storeController', function ($scope, $http) {
             .then(function (response) {
                 $scope.ProductsPage = response.data;
                 $scope.PaginationArray = $scope.generatePagesInd(1, $scope.ProductsPage.totalPages);
-                $scope.Categories = [{id:1,name:"category 1"}, {id:2,name:"category 2"}, {id:3,name:"category 3"}, {id:4,name:"category 4"}];
             });
     };
 
@@ -39,7 +48,7 @@ angular.module('app').controller('storeController', function ($scope, $http) {
         }
         return arr;
     }
-
+    $scope.getCategories();
     $scope.fillTable();
 
 });
