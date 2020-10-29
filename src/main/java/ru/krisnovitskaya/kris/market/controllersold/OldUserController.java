@@ -1,4 +1,4 @@
-package ru.krisnovitskaya.kris.market.controllers;
+package ru.krisnovitskaya.kris.market.controllersold;
 
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,10 +12,10 @@ import ru.krisnovitskaya.kris.market.services.UserService;
 
 import java.security.Principal;
 
-@Controller
-@RequestMapping("/signup")
-@AllArgsConstructor
-public class UserController {
+//@Controller
+//@RequestMapping("/signup")
+//@AllArgsConstructor
+public class OldUserController {
     private UserService userService;
     private RoleService roleService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;

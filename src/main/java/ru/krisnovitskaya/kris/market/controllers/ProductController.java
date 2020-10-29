@@ -1,69 +1,66 @@
 package ru.krisnovitskaya.kris.market.controllers;
 
-
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
-
-import org.springframework.ui.Model;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import ru.krisnovitskaya.kris.market.dto.ProductDto;
+import ru.krisnovitskaya.kris.market.entities.Category;
 import ru.krisnovitskaya.kris.market.entities.Product;
 import ru.krisnovitskaya.kris.market.exceptions.ResourceNotFoundException;
+import ru.krisnovitskaya.kris.market.services.CategoryService;
 import ru.krisnovitskaya.kris.market.services.ProductService;
 import ru.krisnovitskaya.kris.market.utils.ProductFilter;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-@Controller
-@RequestMapping("/products")
+
+@RestController
+@RequestMapping("/api/v1/products")
 @AllArgsConstructor
 public class ProductController {
     private ProductService productService;
 
-    @GetMapping
-    public String showAllProducts(Model model,
-                                  @RequestParam(defaultValue = "1", name = "p") Integer page,
-                                  @RequestParam MultiValueMap<String, String> params
-    ) {
+    @GetMapping(produces = "application/json") // /api/v1/products
+    public Page<ProductDto> getAllProducts(@RequestParam(defaultValue = "1", name = "p") Integer page,
+                                        @RequestParam MultiValueMap<String, String> params) {
         if (page < 1) {
             page = 1;
         }
+
         ProductFilter productFilter = new ProductFilter(params);
-        Page<Product> products = productService.findAll(productFilter.getSpec(), page - 1, 5);
-        model.addAttribute("products", products);
-        model.addAttribute("filterDefinition", productFilter.getFilterDefinition());
-        return "products";
+        Page<Product> content = productService.findAll(productFilter.getSpec(), page - 1, 5);
+        Page<ProductDto> out = new PageImpl<>(content.getContent().stream().map(ProductDto::new).collect(Collectors.toList()), content.getPageable(), content.getTotalElements());
+        return out;
     }
 
-    @GetMapping("/{id}")
-    @ResponseBody
-    public Product getOneProductById(@PathVariable Long id) {
-        return productService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product with id: " + id + " doesn't exists"));
+    @GetMapping(value = "/{id}", produces = "application/json")
+    public Product getProductById(@PathVariable Long id) {
+        return productService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to find product with id: " + id));
     }
 
-    @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable Long id, Model model) {
-        Product p = productService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product with id: " + id + " doesn't exists (for edit)"));
-        model.addAttribute("product", p);
-        return "edit_product";
+    @PostMapping(consumes = "application/json", produces = "application/json")
+    public Product createProduct(@RequestBody Product p) {
+        p.setId(null);
+        return productService.saveOrUpdate(p);
     }
 
-    @PostMapping("/edit")
-    public String showEditForm(@ModelAttribute Product product) {
-        productService.saveOrUpdate(product);
-        return "redirect:/products";
+    @PutMapping(consumes = "application/json", produces = "application/json")
+    public Product updateProduct(@RequestBody Product p) {
+        return productService.saveOrUpdate(p);
     }
 
-    @GetMapping("/delete/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public String deleteOneProductById(@PathVariable Long id) {
+    @DeleteMapping
+    public void deleteAll() {
+        productService.deleteAll();
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Long id) {
         productService.deleteById(id);
-        return "ok";
     }
 }
-

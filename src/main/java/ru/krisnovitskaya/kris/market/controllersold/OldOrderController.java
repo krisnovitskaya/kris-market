@@ -1,5 +1,4 @@
-package ru.krisnovitskaya.kris.market.controllers;
-
+package ru.krisnovitskaya.kris.market.controllersold;
 
 
 import lombok.AllArgsConstructor;
@@ -15,16 +14,16 @@ import ru.krisnovitskaya.kris.market.utils.Cart;
 import java.security.Principal;
 import java.util.List;
 
-@Controller
-@RequestMapping("/orders")
-@AllArgsConstructor
-public class OrderController {
+//@Controller
+//@RequestMapping("/orders")
+//@AllArgsConstructor
+public class OldOrderController {
     private UserService userService;
     private OrderService orderService;
     private Cart cart;
 
     @GetMapping
-    public String showOrders(Model model, Principal principal) {
+     public String showOrders(Model model, Principal principal) {
         User user = userService.findByUsername(principal.getName());
         List<Order> orders = orderService.findByUser(user);
         model.addAttribute("orders", orders);
@@ -51,4 +50,3 @@ public class OrderController {
         return "Ваш заказ #" + order.getId();
     }
 }
-

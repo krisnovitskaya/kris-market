@@ -3,7 +3,7 @@ angular.module('app').controller('storeController', function ($scope, $http) {
 
     $scope.getCategories = function() {
             $http({
-                        url: contextPath + '/api/v1/products/category',
+                        url: contextPath + '/api/v1/categories',
                         method: 'GET'
                     })
                         .then(function (response) {
