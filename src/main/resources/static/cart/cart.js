@@ -1,6 +1,24 @@
 angular.module('app').controller('cartController', function ($scope, $http) {
     const contextPath = 'http://localhost:8189/market';
 
+
+        $scope.createOrder = function(){
+            $http({
+                        url: contextPath + '/api/v1/orders/create',
+                        method: 'POST',
+                        params: {
+                            phone: $scope.newOrder.phone,
+                            address: $scope.newOrder.address
+                        }
+                    })
+                        .then(function (response) {
+                            console.log("ok");
+                            $scope.newOrder = null;
+                            $scope.cartContentRequest();
+                        });
+        };
+
+
     $scope.cartContentRequest = function () {
         $http({
             url: contextPath + '/api/v1/cart',
@@ -43,4 +61,5 @@ angular.module('app').controller('cartController', function ($scope, $http) {
     };
 
     $scope.cartContentRequest();
+
 });

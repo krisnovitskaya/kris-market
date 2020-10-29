@@ -61,7 +61,8 @@ create table orders (
     id                      bigserial primary key,
     user_id                 bigint references users(id),
     price                   int,
-    address                 varchar(1000)
+    address                 varchar(1000),
+    phone                   int
 );
 
 create table order_items (

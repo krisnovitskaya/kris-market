@@ -33,12 +33,16 @@ public class Order {
     @Column(name = "address")
     private String address;
 
-    public Order(User user, Cart cart, String address) {
+    @Column(name = "phone")
+    private int phone;
+
+    public Order(User user, Cart cart, String address, int phone) {
         this.user = user;
         this.price = cart.getPrice();
         this.items = new ArrayList<>();
         this.address = address;
-        cart.getItems().stream().forEach(oi -> {
+        this.phone = phone;
+        cart.getItems().forEach(oi -> {
             oi.setOrder(this);
             items.add(oi);
         });
@@ -46,8 +50,8 @@ public class Order {
     }
 
 
-    public void print(){
-        System.out.printf("user id =  %d, price = %d, address = %s, items count = %d", user.getId(), price, address, items.size());
-        System.out.println();
-    }
+//    public void print(){
+//        System.out.printf("user id =  %d, price = %d, address = %s, items count = %d", user.getId(), price, address, items.size());
+//        System.out.println();
+//    }
 }

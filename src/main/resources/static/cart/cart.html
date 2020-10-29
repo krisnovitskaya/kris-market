@@ -25,4 +25,19 @@
         </tr>
         </tbody>
     </table>
+
+    <form novalidate ng-submit="createOrder()">
+        <div class="form-group col-md-6">
+            <label for="newOrderReceiverPhone">Телефон</label>
+            <input class="form-control" type="number" ng-model="newOrder.phone" id="newOrderReceiverPhone">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="newOrderReceiverAddress">Адрес доставки</label>
+            <input class="form-control" type="text" ng-model="newOrder.address" id="newOrderReceiverAddress">
+        </div>
+        <div>
+            <button class="btn btn-success" type="submit">Создать</button>
+        </div>
+    </form>
+
 </div>
