@@ -13,5 +13,10 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL94Dialect
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: false
 jwt:
   secret: tg5g98h45g98h45g9845hg98hf9834hf9834hjheriheriuher9g8h384y5934yhhtertg

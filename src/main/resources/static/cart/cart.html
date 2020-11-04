@@ -1,6 +1,7 @@
 <div>
     <h3>Корзина</h3>
-    <table class="table table-hover" cellpadding="0" cellspacing="0">
+    <span ng-if="cart.items.length == 0">Корзина пуста</span>
+    <table class="table table-hover" cellpadding="0" cellspacing="0" ng-if="cart.items.length > 0">
         <tr>
             <td>Название</td>
             <td>Количество</td>
@@ -26,7 +27,7 @@
         </tbody>
     </table>
 
-    <form novalidate ng-submit="createOrder()">
+    <form novalidate ng-submit="createOrder()" ng-show="cart.items.length > 0">
         <div class="form-group col-md-6">
             <label for="newOrderReceiverPhone">Телефон</label>
             <input class="form-control" type="number" ng-model="newOrder.phone" id="newOrderReceiverPhone">

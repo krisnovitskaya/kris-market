@@ -3,6 +3,7 @@ package ru.krisnovitskaya.kris.market.controllers;
 
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +11,7 @@ import ru.krisnovitskaya.kris.market.dto.CartDto;
 import ru.krisnovitskaya.kris.market.dto.OrderDto;
 import ru.krisnovitskaya.kris.market.entities.Order;
 import ru.krisnovitskaya.kris.market.entities.User;
+import ru.krisnovitskaya.kris.market.exceptions.ResourceNotFoundException;
 import ru.krisnovitskaya.kris.market.services.OrderService;
 import ru.krisnovitskaya.kris.market.services.UserService;
 import ru.krisnovitskaya.kris.market.utils.Cart;
@@ -28,18 +30,17 @@ public class OrderController {
 
     @GetMapping(produces = "application/json")
     public List<OrderDto> showOrders(Principal principal) {
-        User user = userService.findByUsername(principal.getName());
-        List<Order> orders = orderService.findByUser(user);
-        List<OrderDto> orderDtos  = orders.stream().map(OrderDto::new).collect(Collectors.toList());
-        return orderDtos;
+        return orderService.findAllUserOrdersDtosByUsername(principal.getName());
     }
 
 
     @PostMapping("/create")
+    @ResponseStatus(HttpStatus.CREATED)
     public void makeOrder(Principal principal,
                           @RequestParam(name = "phone") int phone,
                             @RequestParam(name = "address") String address){
-        User user = userService.findByUsername(principal.getName());
+
+        User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("Unable to create order for user: " + principal.getName() + ". User doesn't exist"));
         Order order = new Order(user, cart, address, phone);
         orderService.save(order);
     }
