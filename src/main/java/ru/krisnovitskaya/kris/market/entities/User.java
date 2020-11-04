@@ -24,8 +24,10 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "email")
-    private String email;
+    @OneToOne(cascade =  CascadeType.ALL,
+            mappedBy = "user")
+    private Profile profile;
+
 
     @ManyToMany
     @JoinTable(name = "users_roles",
@@ -34,12 +36,12 @@ public class User {
     private Collection<Role> roles;
 
 
-    public User(String name, String password, String email, Role role){
 
-        this.username = name;
-        this.password = password;
-        this.email = email;
-        this.roles = new HashSet<>();
-        roles.add(role);
-    }
+//    public User(String name, String password, Role role){
+//
+//        this.username = name;
+//        this.password = password;
+//        this.roles = new HashSet<>();
+//        roles.add(role);
+//    }
 }

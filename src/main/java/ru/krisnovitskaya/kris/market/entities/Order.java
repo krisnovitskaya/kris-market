@@ -49,9 +49,4 @@ public class Order {
         cart.clear();
     }
 
-
-//    public void print(){
-//        System.out.printf("user id =  %d, price = %d, address = %s, items count = %d", user.getId(), price, address, items.size());
-//        System.out.println();
-//    }
 }

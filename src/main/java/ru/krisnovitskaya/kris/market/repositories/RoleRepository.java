@@ -7,5 +7,5 @@ import ru.krisnovitskaya.kris.market.entities.Role;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
-    Role findByName(String name);
+    Role getOneByName(String name);
 }

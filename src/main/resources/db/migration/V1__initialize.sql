@@ -1,10 +1,21 @@
 create table users (
-  id                    bigserial,
+  id                    bigserial primary key,
   username              varchar(30) not null,
-  password              varchar(80) not null,
-  email                 varchar(50) unique,
-  primary key (id)
+  password              varchar(80) not null
 );
+
+create table profiles(
+  id                    bigserial primary key,
+  user_id               bigint not null,
+  firstname             varchar(50),
+  lastname              varchar(50),
+  phone                 int,
+  birth_year            int,
+  sex                   varchar(3),
+  town                  varchar(50),
+  foreign key (user_id) references users (id)
+);
+
 
 create table roles (
   id                    serial,
@@ -20,14 +31,24 @@ CREATE TABLE users_roles (
   foreign key (role_id) references roles (id)
 );
 
+
+insert into users (username, password)
+values
+('user1', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i'),
+('user2', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i');
+
+insert into profiles (user_id, firstname, lastname, phone, birth_year, sex, town)
+values
+(1, 'Bob', 'White', 1234567, 1980, 'm', 'London'),
+(2, 'Elena', 'Sorokina', 7654321, 1985, 'f', 'Moscow');
+
+
+
 insert into roles (name)
 values
 ('ROLE_USER'), ('ROLE_ADMIN'), ('SOMETHING');
 
-insert into users (username, password, email)
-values
-('user1', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i', 'user1@gmail.com'),
-('user2', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i', 'user2@gmail.com');
+
 
 insert into users_roles (user_id, role_id) values (1, 1), (1, 2);
 

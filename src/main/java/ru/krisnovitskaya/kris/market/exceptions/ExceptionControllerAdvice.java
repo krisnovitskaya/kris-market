@@ -17,4 +17,11 @@ public class ExceptionControllerAdvice {
         MarketError err = new MarketError(HttpStatus.NOT_FOUND.value(), e.getMessage());
         return new ResponseEntity<>(err, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler
+    public ResponseEntity<?> handleWrongPasswordException(WrongPasswordException e) {
+        log.error(e.getMessage());
+        MarketError err = new MarketError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+        return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
+    }
 }

@@ -23,7 +23,7 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
 
     public Optional<User> findByUsername(String username) {
-        return userRepository.findByUsername(username);
+        return userRepository.getOneByUsername(username);
     }
 
     @Override
@@ -39,6 +39,5 @@ public class UserService implements UserDetailsService {
 
     public User save(User user) {
         return userRepository.save(user);
-
     }
 }

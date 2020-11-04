@@ -9,6 +9,4 @@ import ru.krisnovitskaya.kris.market.entities.Product;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> , JpaSpecificationExecutor<Product> {
-
-
 }
