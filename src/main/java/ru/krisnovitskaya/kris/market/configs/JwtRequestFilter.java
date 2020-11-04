@@ -44,14 +44,16 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             }
         }
 
+
+
+        //из-за этой обновленной части кода с получением токена из токена возникает нуллпоинтерэкспешион
+        // либо сразу при попытке доступа(видно только меню), либо после логина (видны пустые формы без товаров и т.д.).
+        //оставила старый вариант
+        // текст ошибки в NPE.txt
+
 //        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 //            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, null, jwtTokenUtil.getRoles(jwt).stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
 //            SecurityContextHolder.getContext().setAuthentication(token);
-//
-////            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-////            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-////            token.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-////            SecurityContextHolder.getContext().setAuthentication(token);
 //        }
 
 
