@@ -7,6 +7,7 @@ import ru.krisnovitskaya.kris.market.entities.Product;
 import ru.krisnovitskaya.kris.market.repositories.specifications.ProductSpecifications;
 
 import java.util.List;
+import java.util.Map;
 
 
 @Getter
@@ -15,6 +16,7 @@ public class ProductFilter {
     private String filterDefinition;
 
     public ProductFilter(MultiValueMap<String, String> params) {
+    //public ProductFilter(? extends Map<String, List<String>> params) {
         StringBuilder filterDefinitionBuilder = new StringBuilder();
         spec = Specification.where(null);
 

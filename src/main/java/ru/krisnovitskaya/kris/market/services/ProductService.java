@@ -8,8 +8,10 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.krisnovitskaya.kris.market.entities.Product;
 import ru.krisnovitskaya.kris.market.repositories.ProductRepository;
+import ru.krisnovitskaya.kris.market.soap.ProductXML;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,5 +43,26 @@ public class ProductService {
 
     public Product saveOrUpdate(Product product) {
         return productRepository.save(product);
+    }
+    public ProductXML getXMLProductById(long id) {
+        ProductXML p = new ProductXML();
+        Product product = productRepository.findById(id).get();
+        p.setId(product.getId());
+        p.setName(product.getTitle());
+        p.setPrice(product.getPrice());
+        return p;
+    }
+
+    public ArrayList<ProductXML> getAllinXML(Specification<Product> spec) {
+        List<Product> products = productRepository.findAll(spec);
+        ArrayList<ProductXML> productList = new ArrayList<>();
+        for (Product product : products) {
+            ProductXML p = new ProductXML();
+            p.setId(product.getId());
+            p.setName(product.getTitle());
+            p.setPrice(product.getPrice());
+            productList.add(p);
+        }
+        return productList;
     }
 }

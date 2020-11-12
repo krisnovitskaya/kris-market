@@ -1,0 +1,51 @@
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:tns="http://www.krisnovitskaya.com/ws/market"
+        targetNamespace="http://www.krisnovitskaya.com/ws/market" elementFormDefault="qualified">
+
+
+
+    <xs:element name="getProductByIdRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getProductByIdResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="product" type="tns:productXML"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="productXML">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="price" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="getProductsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="min_price" minOccurs="0" type="xs:int"/>
+                <xs:element name="max_price" minOccurs="0" type="xs:int"/>
+                <xs:element name="title_part" minOccurs="0" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getProductsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="product" maxOccurs="unbounded" type="tns:productXML"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+</xs:schema>
