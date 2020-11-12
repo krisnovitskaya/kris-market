@@ -50,7 +50,11 @@ values
 
 
 
-insert into users_roles (user_id, role_id) values (1, 1), (1, 2);
+insert into users_roles (user_id, role_id)
+values
+(1, 1),
+(1, 2),
+(2, 1);
 
 create table products (
     id                      bigserial primary key,
