@@ -17,19 +17,21 @@ import java.util.List;
 
 
 /**
- * <p>Java class for productXML complex type.
+ * <p>Java class for orderXML complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="productXML"&gt;
+ * &lt;complexType name="orderXML"&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
- *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="username" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="price" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
- *         &lt;element name="category" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded"/&gt;
+ *         &lt;element name="phone" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
+ *         &lt;element name="address" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="itemOrder" type="{http://www.krisnovitskaya.com/ws/market}itemOrder" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -39,20 +41,25 @@ import java.util.List;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "productXML", propOrder = {
+@XmlType(name = "orderXML", propOrder = {
     "id",
-    "name",
+    "username",
     "price",
-    "category"
+    "phone",
+    "address",
+    "itemOrder"
 })
-public class ProductXML {
+public class OrderXML {
 
     protected long id;
     @XmlElement(required = true)
-    protected String name;
+    protected String username;
     protected int price;
+    protected int phone;
     @XmlElement(required = true)
-    protected List<String> category;
+    protected String address;
+    @XmlElement(required = true)
+    protected List<ItemOrder> itemOrder;
 
     /**
      * Gets the value of the id property.
@@ -71,27 +78,27 @@ public class ProductXML {
     }
 
     /**
-     * Gets the value of the name property.
+     * Gets the value of the username property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
     /**
-     * Sets the value of the name property.
+     * Sets the value of the username property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setName(String value) {
-        this.name = value;
+    public void setUsername(String value) {
+        this.username = value;
     }
 
     /**
@@ -111,32 +118,72 @@ public class ProductXML {
     }
 
     /**
-     * Gets the value of the category property.
+     * Gets the value of the phone property.
+     * 
+     */
+    public int getPhone() {
+        return phone;
+    }
+
+    /**
+     * Sets the value of the phone property.
+     * 
+     */
+    public void setPhone(int value) {
+        this.phone = value;
+    }
+
+    /**
+     * Gets the value of the address property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getAddress() {
+        return address;
+    }
+
+    /**
+     * Sets the value of the address property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setAddress(String value) {
+        this.address = value;
+    }
+
+    /**
+     * Gets the value of the itemOrder property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the category property.
+     * This is why there is not a <CODE>set</CODE> method for the itemOrder property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getCategory().add(newItem);
+     *    getItemOrder().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link String }
+     * {@link ItemOrder }
      * 
      * 
      */
-    public List<String> getCategory() {
-        if (category == null) {
-            category = new ArrayList<String>();
+    public List<ItemOrder> getItemOrder() {
+        if (itemOrder == null) {
+            itemOrder = new ArrayList<ItemOrder>();
         }
-        return this.category;
+        return this.itemOrder;
     }
 
 }

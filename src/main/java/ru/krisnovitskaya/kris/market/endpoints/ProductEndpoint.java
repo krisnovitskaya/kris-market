@@ -45,12 +45,9 @@ public class ProductEndpoint {
             if(request.getTitlePart() != null) put("title", new ArrayList<>(Collections.singletonList(request.getTitlePart())));
             if(request.getMinPrice() != null) put("min_price", new ArrayList<>(Collections.singletonList(request.getMinPrice().toString())));
             if(request.getMaxPrice() != null) put("max_price", new ArrayList<>(Collections.singletonList(request.getMaxPrice().toString())));
+            if(request.getCategory() != null && request.getCategory().size() >= 1) put("categories", new ArrayList<>(request.getCategory()));
         }};
-//        Map<String, String> params = new HashMap<>(){{
-//            if(request.getTitlePart() != null) put("title", request.getTitlePart());
-//            if(request.getMinPrice() != null) put("min_price", request.getMinPrice().toString());
-//            if(request.getMaxPrice() != null) put("max_price", request.getMaxPrice().toString());
-//        }};
+
         ProductFilter productFilter = new ProductFilter(valueMap);
         GetProductsResponse response = new GetProductsResponse();
         response.getProduct().addAll(productService.getAllinXML(productFilter.getSpec()));

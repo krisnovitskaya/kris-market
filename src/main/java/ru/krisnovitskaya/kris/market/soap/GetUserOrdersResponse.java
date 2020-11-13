@@ -23,7 +23,7 @@ import java.util.List;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="product" type="{http://www.krisnovitskaya.com/ws/market}productXML" maxOccurs="unbounded"/&gt;
+ *         &lt;element name="order" type="{http://www.krisnovitskaya.com/ws/market}orderXML" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -34,41 +34,41 @@ import java.util.List;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "product"
+    "order"
 })
-@XmlRootElement(name = "getProductsResponse")
-public class GetProductsResponse {
+@XmlRootElement(name = "getUserOrdersResponse")
+public class GetUserOrdersResponse {
 
     @XmlElement(required = true)
-    protected List<ProductXML> product;
+    protected List<OrderXML> order;
 
     /**
-     * Gets the value of the product property.
+     * Gets the value of the order property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the product property.
+     * This is why there is not a <CODE>set</CODE> method for the order property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getProduct().add(newItem);
+     *    getOrder().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link ProductXML }
+     * {@link OrderXML }
      * 
      * 
      */
-    public List<ProductXML> getProduct() {
-        if (product == null) {
-            product = new ArrayList<ProductXML>();
+    public List<OrderXML> getOrder() {
+        if (order == null) {
+            order = new ArrayList<OrderXML>();
         }
-        return this.product;
+        return this.order;
     }
 
 }

@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import ru.krisnovitskaya.kris.market.entities.Category;
 import ru.krisnovitskaya.kris.market.entities.Product;
 import ru.krisnovitskaya.kris.market.repositories.ProductRepository;
 import ru.krisnovitskaya.kris.market.soap.ProductXML;
@@ -14,6 +15,7 @@ import ru.krisnovitskaya.kris.market.soap.ProductXML;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -61,6 +63,8 @@ public class ProductService {
             p.setId(product.getId());
             p.setName(product.getTitle());
             p.setPrice(product.getPrice());
+            List<String> categories = product.getCategories().stream().map(Category::getName).collect(Collectors.toList());
+            p.getCategory().addAll(categories);
             productList.add(p);
         }
         return productList;

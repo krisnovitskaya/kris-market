@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class OrderDto {
 
     private Long id;
-    //private User user;
+    private String username;
     private List<OrderItemDto> items;
     private int price;
     private String address;
@@ -19,6 +19,7 @@ public class OrderDto {
 
     public OrderDto(Order order){
         this.id = order.getId();
+        this.username = order.getUser().getUsername();
         this.items = order.getItems().stream().map(OrderItemDto::new).collect(Collectors.toList());
         this.price = order.getPrice();
         this.address = order.getAddress();
