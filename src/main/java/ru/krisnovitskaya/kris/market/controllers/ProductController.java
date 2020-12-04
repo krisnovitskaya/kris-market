@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import ru.krisnovitskaya.kris.market.dto.PageDto;
 import ru.krisnovitskaya.kris.market.dto.ProductDto;
 import ru.krisnovitskaya.kris.market.entities.Category;
 import ru.krisnovitskaya.kris.market.entities.Product;
@@ -26,16 +27,18 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping(produces = "application/json") // /api/v1/products
-    public Page<ProductDto> getAllProducts(@RequestParam(defaultValue = "1", name = "p") Integer page,
-                                        @RequestParam MultiValueMap<String, String> params) {
+    public PageDto<ProductDto> getAllProducts(@RequestParam(defaultValue = "1", name = "p") Integer page,
+                                              @RequestParam MultiValueMap<String, String> params) {
         if (page < 1) {
             page = 1;
         }
 
         ProductFilter productFilter = new ProductFilter(params);
         Page<Product> content = productService.findAll(productFilter.getSpec(), page - 1, 5);
-        Page<ProductDto> out = new PageImpl<>(content.getContent().stream().map(ProductDto::new).collect(Collectors.toList()), content.getPageable(), content.getTotalElements());
-        return out;
+        //Page<ProductDto> out = new PageImpl<>(content.getContent().stream().map(ProductDto::new).collect(Collectors.toList()), content.getPageable(), content.getTotalElements());
+
+        return new PageDto<ProductDto>(content.getContent().stream().map(ProductDto::new).collect(Collectors.toList()), content.getPageable(), content.getTotalElements());
+
     }
 
     @GetMapping(value = "/{id}", produces = "application/json")
