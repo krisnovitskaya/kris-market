@@ -42,7 +42,7 @@ public class ProductService {
     }
 
     public PageDto<ProductDto> findAll(Specification<Product> spec, int page, int size) {
-        Page<Product> content= productRepository.findAll(spec, PageRequest.of(page, size));
+        Page<Product> content = productRepository.findAll(spec, PageRequest.of(page, size));
         return new PageDto<ProductDto>(content.getContent().stream().map(ProductDto::new).collect(Collectors.toList()), content.getPageable(), content.getTotalElements());
     }
 
