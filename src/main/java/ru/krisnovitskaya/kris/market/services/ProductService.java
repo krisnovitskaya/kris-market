@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import ru.krisnovitskaya.kris.market.dto.PageDto;
+import ru.krisnovitskaya.kris.market.dto.ProductDto;
 import ru.krisnovitskaya.kris.market.entities.Category;
 import ru.krisnovitskaya.kris.market.entities.Product;
 import ru.krisnovitskaya.kris.market.repositories.ProductRepository;
@@ -39,8 +41,9 @@ public class ProductService {
         return productRepository.findAll(spec);
     }
 
-    public Page<Product> findAll(Specification<Product> spec, int page, int size) {
-        return productRepository.findAll(spec, PageRequest.of(page, size));
+    public PageDto<ProductDto> findAll(Specification<Product> spec, int page, int size) {
+        Page<Product> content= productRepository.findAll(spec, PageRequest.of(page, size));
+        return new PageDto<ProductDto>(content.getContent().stream().map(ProductDto::new).collect(Collectors.toList()), content.getPageable(), content.getTotalElements());
     }
 
     public Product saveOrUpdate(Product product) {

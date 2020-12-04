@@ -8,7 +8,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 import ru.krisnovitskaya.kris.market.dto.ProfileDto;
+import ru.krisnovitskaya.kris.market.entities.Product;
 import ru.krisnovitskaya.kris.market.entities.Profile;
+import ru.krisnovitskaya.kris.market.repositories.ProductRepository;
 import ru.krisnovitskaya.kris.market.repositories.ProfileRepository;
 
 @DataJpaTest
@@ -16,7 +18,9 @@ import ru.krisnovitskaya.kris.market.repositories.ProfileRepository;
 public class RepositoryTest {
 
     @Autowired
-    ProfileRepository profileRepository;
+    private ProfileRepository profileRepository;
+
+
 
     @Test
     public void checkFindProfileByUsername(){
@@ -25,4 +29,6 @@ public class RepositoryTest {
         Assertions.assertEquals(1980, profile.getBirthYear());
         System.out.println(new ProfileDto(profile));
     }
+
+
 }

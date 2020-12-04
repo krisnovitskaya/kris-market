@@ -34,11 +34,7 @@ public class ProductController {
         }
 
         ProductFilter productFilter = new ProductFilter(params);
-        Page<Product> content = productService.findAll(productFilter.getSpec(), page - 1, 5);
-        //Page<ProductDto> out = new PageImpl<>(content.getContent().stream().map(ProductDto::new).collect(Collectors.toList()), content.getPageable(), content.getTotalElements());
-
-        return new PageDto<ProductDto>(content.getContent().stream().map(ProductDto::new).collect(Collectors.toList()), content.getPageable(), content.getTotalElements());
-
+        return productService.findAll(productFilter.getSpec(), page - 1, 5);
     }
 
     @GetMapping(value = "/{id}", produces = "application/json")
