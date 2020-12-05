@@ -50,10 +50,9 @@ public class RepositoryTest {
     public void checkFindAllWithSpec(){
         ProductFilter filter = makeFilterWithSpec(null, 180, 199, List.of("category 1", "category 2"));
         Page<Product> content = productRepository.findAll(filter.getSpec(), PageRequest.of(0, 5));
-        PageDto<ProductDto> pdto = new PageDto<>(content.getContent().stream().map(ProductDto::new).collect(Collectors.toList()), content.getPageable(), content.getTotalElements());
-        Assertions.assertNotNull(pdto);
-        Assertions.assertNotNull(pdto.getContent());
-        Assertions.assertEquals(4, pdto.getTotalElements());
+        Assertions.assertNotNull(content);
+        Assertions.assertNotNull(content.getContent());
+        Assertions.assertEquals(4, content.getTotalElements());
     }
 
     private ProductFilter makeFilterWithSpec(String title, Integer min, Integer max, List<String> categories){
