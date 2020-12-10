@@ -29,6 +29,9 @@ public class RegistrationController {
 
     @PostMapping
     public ResponseEntity<?> registerNewUser(@RequestBody @Validated NewUserDto newUser, BindingResult bindingResult) {
+        if(newUser.getUsername() == null || newUser.getEmail() == null || newUser.getPassword() == null || newUser.getConfirmationPassword() == null){
+            return new ResponseEntity<>(new RegistrationError("Some fields are empty."), HttpStatus.BAD_REQUEST);
+        }
         if (userService.findByUsername(newUser.getUsername()).isPresent()) {
             return new ResponseEntity<>(new RegistrationError("Username " + newUser.getUsername() + " is busy"), HttpStatus.BAD_REQUEST);
         }
