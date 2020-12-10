@@ -1,4 +1,4 @@
-angular.module('app').controller('authController', function ($scope, $http, $localStorage) {
+angular.module('app').controller('authController', function ($scope, $http, $localStorage, $location) {
     const contextPath = 'http://localhost:8189/market';
 
     $scope.tryToAuth = function () {
@@ -27,7 +27,8 @@ angular.module('app').controller('authController', function ($scope, $http, $loc
         if ($scope.user.password) {
             $scope.user.password = null;
         }
-         $window.location.href = '#!/'
+        $location.path('/auth');
+
     };
 
     $scope.clearUser = function () {
