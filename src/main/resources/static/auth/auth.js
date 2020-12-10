@@ -27,6 +27,7 @@ angular.module('app').controller('authController', function ($scope, $http, $loc
         if ($scope.user.password) {
             $scope.user.password = null;
         }
+         $window.location.href = '#!/'
     };
 
     $scope.clearUser = function () {
@@ -41,4 +42,20 @@ angular.module('app').controller('authController', function ($scope, $http, $loc
             return false;
         }
     };
+
+     $scope.getUserRole = function() {
+            tokenPayload = jwtHelper.decodeToken($localStorage.currentUser.token);
+            $scope.userRoles = tokenPayload.roles;
+        };
+
+
+        $scope.isAdmin = function () {
+            $scope.getUserRole();
+            for (let i = 0; i < $scope.userRoles.length; i++ ){
+                if(angular.equals("ROLE_ADMIN", $scope.userRoles[i])){
+                    return true;
+                }
+            }
+            return false;
+        }
 });

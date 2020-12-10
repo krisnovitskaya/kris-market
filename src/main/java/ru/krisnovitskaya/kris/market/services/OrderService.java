@@ -35,7 +35,6 @@ public class OrderService {
     }
 
     public List<OrderXML> findAllUserOrderXMLByUsername(String username) {
-        //List<OrderDto> orderDtos = this.findAllUserOrdersDtosByUsername(username);
         List<Order> orders = orderRepository.findAllOrdersByUsernameWithItems(username);
 
         List<OrderDto> orderDtos = orders.stream().map(OrderDto::new).collect(Collectors.toList());

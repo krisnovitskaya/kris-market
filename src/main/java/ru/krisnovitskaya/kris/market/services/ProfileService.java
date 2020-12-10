@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import ru.krisnovitskaya.kris.market.entities.Profile;
 import ru.krisnovitskaya.kris.market.repositories.ProfileRepository;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class ProfileService {
@@ -15,7 +17,7 @@ public class ProfileService {
     }
 
 
-    public Profile findProfileByUsername(String username){
+    public Optional<Profile> findProfileByUsername(String username){
         return profileRepository.findProfileByUsername(username);
     }
 }

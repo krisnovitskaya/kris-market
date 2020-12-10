@@ -11,21 +11,25 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular-route.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<!--    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>-->
+    <script src="https://morgul.github.io/ui-bootstrap4/ui-bootstrap-tpls-3.0.6.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
+    <script src="https://cdn.rawgit.com/auth0/angular-jwt/master/dist/angular-jwt.js"></script>
 </head>
 
 <body>
 
-<div class="container">
+<div class="container" ng-controller="authController">
     <h1>Магазин</h1>
     <a class="btn btn-outline-warning" href="#!/">Главная</a>
-    <a class="btn btn-outline-warning" href="#!/auth">Войти</a>
-    <a class="btn btn-outline-warning" href="#!/reg">Регистрация</a>
+    <a ng-show="!isUserLoggedIn()" class="btn btn-outline-warning" href="#!/auth">Войти</a>
+    <a ng-show="!isUserLoggedIn()" class="btn btn-outline-warning" href="#!/reg">Регистрация</a>
     <a class="btn btn-outline-warning" href="#!/store">Магазин</a>
-    <a class="btn btn-outline-warning" href="#!/admin">Админка</a>
     <a class="btn btn-outline-warning" href="#!/cart">Корзина</a>
-    <a class="btn btn-outline-warning" href="#!/orders">Заказы</a>
-    <a class="btn btn-outline-warning" href="#!/profile">Профиль</a>
+    <a ng-show="isUserLoggedIn()" class="btn btn-outline-warning" href="#!/orders">Заказы</a>
+    <a ng-show="isUserLoggedIn()" class="btn btn-outline-warning" href="#!/profile">Профиль</a>
+    <a ng-show="isUserLoggedIn() && isAdmin()" class="btn btn-outline-warning" href="#!/admin">Админка</a>
+    <button ng-show="isUserLoggedIn()" class="btn btn-danger" ng-click="tryToLogout()">Выйти</button>
 
     <ng-view></ng-view>
 

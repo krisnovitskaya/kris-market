@@ -32,7 +32,7 @@ public class RepositoryTest {
 
     @Test
     public void checkFindProfileByUsername(){
-        Profile profile = profileRepository.findProfileByUsername("user1");
+        Profile profile = profileRepository.findProfileByUsername("user1").orElseThrow();
         Assertions.assertNotNull(profile);
         Assertions.assertEquals(1980, profile.getBirthYear());
     }

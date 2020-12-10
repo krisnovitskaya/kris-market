@@ -27,7 +27,7 @@ public class ProfileController {
 
     @GetMapping(produces = "application/json")
     public ProfileDto showProfile(Principal principal) {
-        Profile p = profileService.findProfileByUsername(principal.getName());
+        Profile p = profileService.findProfileByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("Unable to find profile for current user"));
         return new ProfileDto(p);
     }
 
