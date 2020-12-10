@@ -38,33 +38,14 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 username = jwtTokenUtil.getUsernameFromToken(jwt);
             } catch (ExpiredJwtException e) {
                 log.debug("The token is expired");
-//                String error = JsonUtils.convertObjectToJson(new BookServiceError(HttpStatus.UNAUTHORIZED.value(), "Jwt is expired"));
-//                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, error);
-//                return;
             }
         }
 
-
-
-        //из-за этой обновленной части кода с получением токена из токена возникает нуллпоинтерэкспешион
-        // либо сразу при попытке доступа(видно только меню), либо после логина (видны пустые формы без товаров и т.д.).
-        //оставила старый вариант
-        // текст ошибки в NPE.txt
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, null, jwtTokenUtil.getRoles(jwt).stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
             SecurityContextHolder.getContext().setAuthentication(token);
         }
-
-
-//        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-//            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-////            if (jwtTokenUtil.validateToken(jwt, userDetails)) {
-//            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-//            token.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-//            SecurityContextHolder.getContext().setAuthentication(token);
-////            }
-//        }
 
         filterChain.doFilter(request, response);
     }

@@ -20,6 +20,9 @@ public class JwtTokenUtil {
     @Value("${jwt.secret}")
     private String secret;
 
+    @Value("${jwt.timeout}")
+    private long tokenTimeout;
+
     private <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
         Claims claims = getAllClaimsFromToken(token);
         return claimsResolver.apply(claims);
@@ -33,19 +36,6 @@ public class JwtTokenUtil {
         return getClaimFromToken(token, (Function<Claims, List<String>>) claims -> claims.get("roles", List.class));
     }
 
-//    private Date getExpirationDateFromToken(String token) {
-//        return getClaimFromToken(token, Claims::getExpiration);
-//    }
-//
-//    public boolean validateToken(String token) {
-//        return !isTokenExpired(token);
-//    }
-//
-//    public boolean validateToken(String token, UserDetails userDetails) {
-//        String username = getUsernameFromToken(token);
-//        return Objects.equals(username, userDetails.getUsername()) && !isTokenExpired(token);
-//    }
-
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         List<String> rolesList = userDetails.getAuthorities().stream()
@@ -57,7 +47,7 @@ public class JwtTokenUtil {
 
     private String doGenerateToken(Map<String, Object> claims, String subject) {
         Date issuedDate = new Date();
-        Date expiredDate = new Date(issuedDate.getTime() + 60 * 60 * 1000); // todo
+        Date expiredDate = new Date(issuedDate.getTime() + tokenTimeout);
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(subject)
@@ -73,9 +63,5 @@ public class JwtTokenUtil {
                 .parseClaimsJws(token)
                 .getBody();
     }
-//
-//    private boolean isTokenExpired(String token) {
-//        Date date = getExpirationDateFromToken(token);
-//        return date != null && date.before(new Date());
-//    }
+
 }

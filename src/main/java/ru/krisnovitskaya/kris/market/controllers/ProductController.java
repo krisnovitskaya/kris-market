@@ -1,9 +1,11 @@
 package ru.krisnovitskaya.kris.market.controllers;
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import ru.krisnovitskaya.kris.market.dto.PageDto;
@@ -22,9 +24,9 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/products")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ProductController {
-    private ProductService productService;
+    private final ProductService productService;
 
     @GetMapping(produces = "application/json") // /api/v1/products
     public PageDto<ProductDto> getAllProducts(@RequestParam(defaultValue = "1", name = "p") Integer page,
@@ -42,22 +44,26 @@ public class ProductController {
         return productService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to find product with id: " + id));
     }
 
+    @Secured("ROLE_ADMIN")
     @PostMapping(consumes = "application/json", produces = "application/json")
     public Product createProduct(@RequestBody Product p) {
         p.setId(null);
         return productService.saveOrUpdate(p);
     }
 
+    @Secured("ROLE_ADMIN")
     @PutMapping(consumes = "application/json", produces = "application/json")
     public Product updateProduct(@RequestBody Product p) {
         return productService.saveOrUpdate(p);
     }
 
+    @Secured("ROLE_ADMIN")
     @DeleteMapping
     public void deleteAll() {
         productService.deleteAll();
     }
 
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) {
         productService.deleteById(id);

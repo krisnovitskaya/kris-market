@@ -38,11 +38,12 @@ public class OrderController {
     @ResponseStatus(HttpStatus.CREATED)
     public void makeOrder(Principal principal,
                           @RequestParam(name = "phone") int phone,
-                            @RequestParam(name = "address") String address){
+                          @RequestParam(name = "address") String address){
 
         User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("Unable to create order for user: " + principal.getName() + ". User doesn't exist"));
         Order order = new Order(user, cart, address, phone);
         orderService.save(order);
+        cart.clear();
     }
 }
 
