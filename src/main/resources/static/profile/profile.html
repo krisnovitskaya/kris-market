@@ -1,0 +1,40 @@
+<div>
+    <h3>Профиль</h3>
+    <form novalidate ng-submit="updateProfile()">
+        <div class="form-group col-md-6" hidden>
+            <input class="form-control" type="number" ng-model="Profile.id">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="firstname">Имя</label>
+            <input class="form-control" type="text" ng-model="Profile.firstname" id="firstname" placeholder="{{Profile.firstname}}">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="lastname">Фамилия</label>
+            <input class="form-control" type="text" ng-model="Profile.lastname" id="lastname" placeholder="{{Profile.lastname}}">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="phone">Телефон</label>
+            <input class="form-control" type="number" ng-model="Profile.phone" id="phone" placeholder="{{Profile.phone}}">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="year">Год рождения</label>
+            <input class="form-control" type="number" ng-model="Profile.birthYear" id="year" placeholder="{{Profile.birthYear}}">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="sex">Пол</label>
+            <input class="form-control" type="text" ng-model="Profile.sex" id="sex" placeholder="{{Profile.sex}}">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="town">Город</label>
+            <input class="form-control" type="text" ng-model="Profile.town" id="town" placeholder="{{Profile.town}}">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="pass">Введите пароль</label>
+            <input class="form-control" type="password" ng-model="user.password" id="pass">
+        </div>
+        <div>
+            <button class="btn btn-success" type="submit">Изменить</button>
+        </div>
+    </form>
+</div>
+

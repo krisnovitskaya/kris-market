@@ -1,0 +1,18 @@
+<div class="mb-3 text-center">
+
+    <form novalidate ng-submit="trySignUp()">
+    <h1 class="h3 mb-3 font-weight-normal">Пожалуйста зарегистрируйтесь</h1>
+        <div class="form-group col-md-6">
+            <label for="newUserName">Имя пользователя</label>
+            <input class="form-control" type="text" ng-model="newUser.username" id="newUserName">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="newUserPass">Пароль</label>
+            <input class="form-control" type="password" ng-model="newUser.password" id="newUserPass">
+        </div>
+        <div>
+            <button class="btn btn-success" type="submit">Зарегистрироваться</button>
+        </div>
+    </form>
+
+</div>

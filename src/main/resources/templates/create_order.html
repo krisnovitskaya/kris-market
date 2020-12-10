@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+
+    <title>Каталог товаров</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+    <div th:replace="~{navigation :: navigation(Orders)}"/>
+    <h1 th:text="${username + ', Ваш заказ:'}"></h1>
+    <table class="table table-hover">
+        <thead class="thead-dark">
+        <tr>
+            <th>Название</th>
+            <th>Количество</th>
+            <th>Цена</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="oi : ${@cart.items}">
+            <td th:text="${oi.product.title}"/>
+            <td>
+                <span th:text="${oi.quantity}"/>
+            </td>
+            <td th:text="${oi.quantity + ' x ' + oi.pricePerProduct + ' = ' + oi.price}"/>
+        </tr>
+        <tr>
+            <td></td>
+            <td>Итого:</td>
+            <td th:text="${@cart.price}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <form method="post" th:action="@{/orders/confirm}">
+        <input type="text" required name="receiver_name" th:value="${username}" placeholder="Имя получателя">
+        <input type="text" required name="phone_number" placeholder="Телефон">
+        <input type="text" required name="address" placeholder="Адрес доставки">
+        <button class="btn btn-success" type="submit">Подтвердить</button>
+    </form>
+</div>
+
+</body>
+</html>
