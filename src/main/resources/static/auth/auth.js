@@ -27,6 +27,7 @@ angular.module('app').controller('authController', function ($scope, $http, $loc
         if ($scope.user.password) {
             $scope.user.password = null;
         }
+        $window.location.href = '#!/main'
     };
 
     $scope.clearUser = function () {
@@ -35,10 +36,26 @@ angular.module('app').controller('authController', function ($scope, $http, $loc
     };
 
     $scope.isUserLoggedIn = function () {
+//        $scope.getUserRole();
         if ($localStorage.currentUser) {
             return true;
         } else {
             return false;
         }
     };
+
+//    $scope.isAdmin = function () {
+//            $scope.getUserRole();
+//            if ($scope.userRoles.includes('ROLE_ADMIN')) {
+//                return true;
+//            } else {
+//                return false;
+//            }
+//        };
+
+//    $scope.getUserRole = function() {
+//            tokenPayload = jwtHelper.decodeToken($localStorage.currentUser.token);
+//            $scope.userRoles = tokenPayload.roles;
+//            alert($scope.userRoles);
+//        };
 });
