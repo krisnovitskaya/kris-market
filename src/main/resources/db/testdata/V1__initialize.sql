@@ -9,6 +9,7 @@ create table profiles(
   user_id               bigint not null,
   firstname             varchar(50),
   lastname              varchar(50),
+  email                 varchar(255),
   phone                 int,
   birth_year            int,
   sex                   varchar(3),
@@ -37,16 +38,16 @@ values
 ('user1', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i'),
 ('user2', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i');
 
-insert into profiles (user_id, firstname, lastname, phone, birth_year, sex, town)
+insert into profiles (user_id, firstname, lastname, email, phone, birth_year, sex, town)
 values
-(1, 'Bob', 'White', 1234567, 1980, 'm', 'London'),
-(2, 'Elena', 'Sorokina', 7654321, 1985, 'f', 'Moscow');
+(1, 'Bob', 'White','bob@mail.ru', 1234567, 1980, 'm', 'London'),
+(2, 'Elena', 'Sorokina','lenaizpolipropilena@yahoo.com', 7654321, 1985, 'f', 'Moscow');
 
 
 
 insert into roles (name)
 values
-('ROLE_USER'), ('ROLE_ADMIN'), ('SOMETHING');
+('ROLE_USER'), ('ROLE_ADMIN'), ('ROLE_OWNER');
 
 
 

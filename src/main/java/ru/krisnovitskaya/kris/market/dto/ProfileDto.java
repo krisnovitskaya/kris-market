@@ -15,6 +15,7 @@ public class ProfileDto {
     private Long id;
     private String firstname;
     private String lastname;
+    private String email;
     private int phone;
     private int birthYear;
     private String sex;
@@ -25,6 +26,7 @@ public class ProfileDto {
         this.id = profile.getId();
         this.firstname = profile.getFirstname();
         this.lastname = profile.getLastname();
+        this.email = profile.getEmail();
         this.phone = profile.getPhone();
         this.birthYear = profile.getBirthYear();
         this.sex = profile.getSex();

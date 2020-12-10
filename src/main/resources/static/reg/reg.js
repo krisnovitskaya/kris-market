@@ -6,9 +6,13 @@ angular.module('app').controller('regController', function ($scope, $http, $loca
 
         $scope.trySignUp = function () {
             $http.post(contextPath + '/reg', $scope.newUser)
-                .then(function (response) {
-                      $scope.newUser = null;
-                      $location.url('/auth');
-                });
+                .then(function successCallback(response) {
+                      alert('Вы успешно зарегистрированы');
+                            $scope.newUser = null;
+                            $location.url('/auth');
+                      }, function errorCallback(response){
+                            alert(response.data.message);
+                            $scope.newUser = null;
+                      });
         }
 });

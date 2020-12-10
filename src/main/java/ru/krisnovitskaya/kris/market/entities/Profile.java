@@ -23,6 +23,9 @@ public class Profile {
     @Column(name = "lastname")
     private String lastname;
 
+    @Column(name = "email")
+    private String email;
+
     @Column(name = "phone")
     private int phone;
 
@@ -40,9 +43,10 @@ public class Profile {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public Profile(String firstname, String lastname, int phone, int birthYear, String sex, String town) {
+    public Profile(String firstname, String lastname, String email, int phone, int birthYear, String sex, String town) {
         this.firstname = firstname;
         this.lastname = lastname;
+        this.email = email;
         this.phone = phone;
         this.birthYear = birthYear;
         this.sex = sex;
