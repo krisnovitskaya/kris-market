@@ -1,4 +1,4 @@
-angular.module('app').controller('cartController', function ($scope, $http) {
+angular.module('app').controller('cartController', function ($scope, $http, $localStorage) {
     const contextPath = 'http://localhost:8189/market';
 
 
@@ -60,6 +60,14 @@ angular.module('app').controller('cartController', function ($scope, $http) {
             });
     };
 
+
+    $scope.isUserLoggedIn = function () {
+        if ($localStorage.currentUser) {
+            return true;
+        } else {
+            return false;
+        }
+    };
 
     $scope.cartContentRequest();
 

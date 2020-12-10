@@ -27,8 +27,7 @@
         </tbody>
     </table>
 
-    <div class="container" ng-controller="authController">
-    <form novalidate ng-submit="createOrder()" ng-show="isUserLoggedIn() && cart.items.length > 0">
+    <form novalidate ng-submit="createOrder()" ng-show="cart.items.length > 0">
         <div class="form-group col-md-6">
             <label for="newOrderReceiverPhone">Телефон</label>
             <input class="form-control" type="number" ng-model="newOrder.phone" id="newOrderReceiverPhone">
@@ -41,6 +40,5 @@
             <button class="btn btn-success" type="submit">Создать</button>
         </div>
     </form>
-    </div>
 
 </div>
