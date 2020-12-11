@@ -20,7 +20,7 @@ public class PageDto<E> {
     public PageDto(List<E> content, Pageable pageable, long total) {
         this.content = content;
         this.totalElements = total;
-        this.totalPages = (int) total/pageable.getPageSize();
+        this.totalPages = (int) Math.ceil(1.0 * total/pageable.getPageSize());
     }
 
 
