@@ -12,7 +12,7 @@ create table profiles(
   email                 varchar(255),
   phone                 int,
   birth_year            int,
-  sex                   varchar(3),
+  sex                   boolean,
   town                  varchar(50),
   foreign key (user_id) references users (id)
 );
@@ -40,8 +40,8 @@ values
 
 insert into profiles (user_id, firstname, lastname, email, phone, birth_year, sex, town)
 values
-(1, 'Bob', 'White','bob@mail.ru', 1234567, 1980, 'm', 'London'),
-(2, 'Elena', 'Sorokina','lenaizpolipropilena@yahoo.com', 7654321, 1985, 'f', 'Moscow');
+(1, 'Bob', 'White','bob@mail.ru', 1234567, 1980, true, 'London'),
+(2, 'Elena', 'Sorokina','lenaizpolipropilena@yahoo.com', 7654321, 1985, false, 'Moscow');
 
 
 
@@ -54,7 +54,7 @@ values
 insert into users_roles (user_id, role_id)
 values
 (1, 1),
-(1, 2),
+(2, 2),
 (2, 1);
 
 create table products (

@@ -1,4 +1,4 @@
-angular.module('app').controller('authController', function ($scope, $http, $localStorage, $location) {
+angular.module('app').controller('authController', function ($scope, $http, $localStorage, $location, jwtHelper) {
     const contextPath = 'http://localhost:8189/market';
 
     $scope.tryToAuth = function () {

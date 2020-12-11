@@ -25,8 +25,9 @@
             <input class="form-control" type="number" ng-model="Profile.birthYear" id="year" placeholder="{{Profile.birthYear}}">
         </div>
         <div class="form-group col-md-6">
-            <label for="sex">Пол</label>
-            <input class="form-control" type="text" ng-model="Profile.sex" id="sex" placeholder="{{Profile.sex}}">
+            <label>Пол</label> </br>
+            <label><input class="form-control" type="radio" ng-model="Profile.sex"  ng-value="true" />муж</label>
+            <label><input class="form-control" type="radio" ng-model="Profile.sex"  ng-value="false" />жен</label>
         </div>
         <div class="form-group col-md-6">
             <label for="town">Город</label>

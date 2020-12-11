@@ -1,25 +1,19 @@
 package ru.krisnovitskaya.kris.market.controllers;
 
-import lombok.AllArgsConstructor;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.jpa.domain.Specification;
+
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import ru.krisnovitskaya.kris.market.dto.PageDto;
 import ru.krisnovitskaya.kris.market.dto.ProductDto;
-import ru.krisnovitskaya.kris.market.entities.Category;
 import ru.krisnovitskaya.kris.market.entities.Product;
 import ru.krisnovitskaya.kris.market.exceptions.ResourceNotFoundException;
-import ru.krisnovitskaya.kris.market.services.CategoryService;
 import ru.krisnovitskaya.kris.market.services.ProductService;
 import ru.krisnovitskaya.kris.market.utils.ProductFilter;
 
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+
 
 
 @RestController

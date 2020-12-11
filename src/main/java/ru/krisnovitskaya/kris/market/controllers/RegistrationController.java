@@ -4,21 +4,13 @@ package ru.krisnovitskaya.kris.market.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.krisnovitskaya.kris.market.dto.NewUserDto;
-import ru.krisnovitskaya.kris.market.entities.Profile;
-import ru.krisnovitskaya.kris.market.entities.Role;
-import ru.krisnovitskaya.kris.market.entities.User;
 import ru.krisnovitskaya.kris.market.exceptions.RegistrationError;
-import ru.krisnovitskaya.kris.market.services.ProfileService;
-import ru.krisnovitskaya.kris.market.services.RoleService;
+
 import ru.krisnovitskaya.kris.market.services.UserService;
-
-
-import java.util.HashSet;
 
 @RestController
 @RequiredArgsConstructor

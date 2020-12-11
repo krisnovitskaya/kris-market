@@ -27,10 +27,11 @@ angular.module('app').controller('profileController', function ($scope, $http) {
                                 $scope.user.password = null;
                                 alert('Profile has been updated');
                             }, function errorCallback(response){
-                                window.alert(response.data.message);
+                                $scope.user.password = null;
+                                alert('Profile updated fail. Wrong input data.');
+                                $scope.getProfile();
                             });
             }
-
 
 
     $scope.getProfile();
