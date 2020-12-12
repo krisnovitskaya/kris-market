@@ -19,11 +19,16 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
-    public Category getOneById(Long id){
-        return categoryRepository.getOne(id);
-    }
 
     public List<Category> getByListIds(List<Long> ids){
         return categoryRepository.findAllById(ids);
+    }
+
+    public Category saveOrUpdate(Category category) {
+        return categoryRepository.save(category);
+    }
+
+    public Optional<Category> findByCategoryName(String name) {
+        return categoryRepository.getOneByCategoryName(name);
     }
 }

@@ -40,7 +40,6 @@ public class ProductController {
         ProductFilter productFilter = new ProductFilter(params);
         PageDto<ProductDto> ppdto = productService.findAll(productFilter.getSpec(), page - 1, 5);
         return  ppdto;
-        //return productService.findAll(productFilter.getSpec(), page - 1, 5);
     }
 
     @GetMapping(value = "/{id}", produces = "application/json")

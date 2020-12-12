@@ -19,4 +19,14 @@
             <button class="btn btn-success" type="submit">Сохранить</button>
         </div>
     </form>
+
+    <form novalidate ng-submit="submitCreateNewCategory()">
+        <div class="form-group col-md-6">
+            <label for="newCategoryName">Название</label>
+            <input class="form-control" type="text" ng-model="newCategory.name" id="newCategoryName">
+        </div>
+        <div>
+            <button class="btn btn-success" type="submit">Добавить новую категорию</button>
+        </div>
+    </form>
 </div>

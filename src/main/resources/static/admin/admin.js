@@ -12,6 +12,22 @@ angular.module('app').controller('adminController', function ($scope, $http) {
                         });
         }
 
+    $scope.submitCreateNewCategory = function () {
+        $http({
+                url: contextPath + '/api/v1/categories',
+                method: 'POST',
+                data: $scope.newCategory,
+            })
+            .then( function successCallback(response) {
+                        $scope.newCategory = null;
+                        $scope.getCategory();
+                        alert('Добавлена новая категория');
+                 }, function errorCallback(response){
+                    $scope.newCategory = null;
+                    alert('Category add fail. Wrong input data.');
+                });
+    };
+
 
     $scope.submitCreateNewProduct = function () {
         $http({
