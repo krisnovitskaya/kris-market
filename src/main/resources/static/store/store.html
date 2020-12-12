@@ -1,16 +1,12 @@
 <div>
     <h3>Фильтр</h3>
     <form novalidate ng-submit="fillTable()">
-
-        <label for="filterCategories">Категория Продукта</label><br>
-        <select class="multiselect" data-placeholder="Select Category"
-                ng-model="filter.categories" ng-options="category.name as category.name for category in Categories"
-                multiple="multiple" multiselect-dropdown  id="filterCategories">
-
-        </select>
-        <p>Выбраны категории: {{filter.categories}}</p>
-
-
+        <div class="form-group col-md-6">
+            <label for="filterCategories">Выберите Категории</label>
+            <select class="form-control" multiple="multiple"  ng-model="filter.categories" id="filterCategories">
+                <option value="{{c.id}}" ng-repeat="c in Categories">{{c.name}}</option>
+            </select>
+        </div>
         <div class="form-group col-md-6">
             <label for="filterTitle">Название</label>
             <input class="form-control" type="text" ng-model="filter.title" id="filterTitle">
@@ -33,6 +29,7 @@
         <tr>
             <td>Название</td>
             <td>Цена</td>
+            <td>Категория</td>
             <td></td>
         </tr>
         <tbody>
@@ -40,6 +37,11 @@
         <tr ng-repeat="p in ProductsPage.content">
             <td>{{p.title}}</td>
             <td>{{p.price}}</td>
+            <td>
+                <ul>
+                    <li ng-repeat="c in p.categories" style="list-style-type: none;">{{c}}</li>
+                </ul>
+            </td>
             <td>
                 <button class="btn btn-success" ng-click="addToCart(p.id)">Добавить в корзину</button>
             </td>
