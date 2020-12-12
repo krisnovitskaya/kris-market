@@ -3,17 +3,24 @@ package ru.krisnovitskaya.kris.market.controllers;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import ru.krisnovitskaya.kris.market.dto.PageDto;
 import ru.krisnovitskaya.kris.market.dto.ProductDto;
+import ru.krisnovitskaya.kris.market.entities.Category;
 import ru.krisnovitskaya.kris.market.entities.Product;
 import ru.krisnovitskaya.kris.market.exceptions.ResourceNotFoundException;
+import ru.krisnovitskaya.kris.market.services.CategoryService;
 import ru.krisnovitskaya.kris.market.services.ProductService;
 import ru.krisnovitskaya.kris.market.utils.ProductFilter;
 
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -21,6 +28,7 @@ import ru.krisnovitskaya.kris.market.utils.ProductFilter;
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
+    private final CategoryService categoryService;
 
     @GetMapping(produces = "application/json") // /api/v1/products
     public PageDto<ProductDto> getAllProducts(@RequestParam(defaultValue = "1", name = "p") Integer page,
@@ -42,9 +50,16 @@ public class ProductController {
 
     @Secured("ROLE_ADMIN")
     @PostMapping(consumes = "application/json", produces = "application/json")
-    public Product createProduct(@RequestBody Product p) {
+    public ResponseEntity<?> createProduct(@RequestBody Product p, @RequestParam MultiValueMap<String, String> params) {
+        List<Category> productCategories = new ArrayList<>();
+        if(params.containsKey("categories")){
+            List<Long> ids = params.get("categories").stream().map(s -> Long.parseLong(s)).collect(Collectors.toList());
+            productCategories = categoryService.getByListIds(ids);
+        }
         p.setId(null);
-        return productService.saveOrUpdate(p);
+        p.setCategories(productCategories);
+        productService.saveOrUpdate(p);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Secured("ROLE_ADMIN")

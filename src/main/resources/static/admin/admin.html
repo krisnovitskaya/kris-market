@@ -9,6 +9,12 @@
             <label for="elementPrice">Цена</label>
             <input class="form-control" type="number" ng-model="newProduct.price" id="elementPrice">
         </div>
+        <div class="form-group col-md-6">
+            <label for="elementCategories">Выберите Категории</label>
+            <select class="form-control" multiple="multiple"  ng-model="categories" id="elementCategories">
+                <option value="{{c.id}}" ng-repeat="c in Category">{{c.name}}</option>
+            </select>
+        </div>
         <div>
             <button class="btn btn-success" type="submit">Сохранить</button>
         </div>

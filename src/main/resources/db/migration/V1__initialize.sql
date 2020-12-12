@@ -79,7 +79,7 @@ CREATE TABLE products_categories (
 
 insert into categories (name)
 values
-('category 1'), ('category 2'), ('category 3'), ('category 4');
+('category 1'), ('category 2'), ('category 3'), ('category 4'), ('test category');
 
 
 
