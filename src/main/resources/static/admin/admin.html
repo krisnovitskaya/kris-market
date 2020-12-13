@@ -34,7 +34,7 @@
 
     <form novalidate ng-submit="fillOrderTable()">
     <div class="form-group col-md-6">
-        <label for="getOrders">Выберите Категории</label>
+        <label for="getOrders">Выберите статус заказов</label>
         <select class="form-control" ng-model="status" id="getOrders">
             <option value="">ALL</option>
             <option value="NEW">NEW</option>
@@ -48,6 +48,7 @@
     <table class="table table-hover" cellpadding="0" cellspacing="0">
         <tr>
             <td>Номер заказа</td>
+            <td>Клиент</td>
             <td>Цена</td>
             <td>Адрес</td>
             <td>Телефон</td>
@@ -59,6 +60,7 @@
         <tbody>
         <tr ng-repeat="ao in adminOrders">
             <td>{{ao.id}}</td>
+            <td>{{ao.username}}</td>
             <td>{{ao.price}}</td>
             <td>{{ao.address}}</td>
             <td>{{ao.phone}}</td>
