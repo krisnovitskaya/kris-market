@@ -16,6 +16,7 @@ public class OrderDto {
     private int price;
     private String address;
     private int phone;
+    private String status;
 
     public OrderDto(Order order){
         this.id = order.getId();
@@ -24,5 +25,6 @@ public class OrderDto {
         this.price = order.getPrice();
         this.address = order.getAddress();
         this.phone = order.getPhone();
+        this.status = order.getStatus().toString();
     }
 }

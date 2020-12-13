@@ -36,17 +36,30 @@ public class Order {
     @Column(name = "phone")
     private int phone;
 
+
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
+
     public Order(User user, Cart cart, String address, int phone) {
         this.user = user;
         this.price = cart.getPrice();
         this.items = new ArrayList<>();
         this.address = address;
         this.phone = phone;
+        this.status = OrderStatus.NEW;
         cart.getItems().forEach(oi -> {
             oi.setOrder(this);
             items.add(oi);
         });
         cart.clear();
+    }
+
+
+    public static enum OrderStatus {
+        NEW,
+        IN_PROGRESS,
+        DONE
     }
 
 }

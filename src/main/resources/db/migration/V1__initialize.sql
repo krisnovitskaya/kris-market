@@ -82,13 +82,15 @@ values
 ('category 1'), ('category 2'), ('category 3'), ('category 4'), ('test category');
 
 
+CREATE TYPE order_status AS ENUM('NEW', 'IN_PROGRESS', 'DONE');
 
 create table orders (
     id                      bigserial primary key,
     user_id                 bigint references users(id),
     price                   int,
     address                 varchar(1000),
-    phone                   int
+    phone                   int,
+    status                  order_status
 );
 
 create table order_items (
