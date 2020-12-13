@@ -32,5 +32,13 @@ public class ProductSpecifications {
         };
     }
 
-
+    public static Specification<Product> fetchCategory(){
+        return new Specification<Product>() {
+            @Override
+            public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                root.fetch("categories", JoinType.INNER);
+                return criteriaBuilder.conjunction();
+            }
+        };
+    }
 }

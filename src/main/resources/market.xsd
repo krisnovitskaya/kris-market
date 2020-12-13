@@ -36,7 +36,7 @@
                 <xs:element name="title_part" minOccurs="0" type="xs:string"/>
                 <xs:element name="min_price" minOccurs="0" type="xs:int"/>
                 <xs:element name="max_price" minOccurs="0" type="xs:int"/>
-                <xs:element name="category" minOccurs="0" maxOccurs="unbounded" type="xs:string"/>
+                <xs:element name="category" minOccurs="0" maxOccurs="unbounded" type="xs:long"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

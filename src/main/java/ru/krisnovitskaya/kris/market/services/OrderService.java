@@ -6,8 +6,6 @@ import org.springframework.stereotype.Service;
 import ru.krisnovitskaya.kris.market.dto.OrderDto;
 import ru.krisnovitskaya.kris.market.dto.OrderItemDto;
 import ru.krisnovitskaya.kris.market.entities.Order;
-import ru.krisnovitskaya.kris.market.entities.OrderItem;
-import ru.krisnovitskaya.kris.market.entities.User;
 import ru.krisnovitskaya.kris.market.repositories.OrderRepository;
 import ru.krisnovitskaya.kris.market.soap.ItemOrder;
 import ru.krisnovitskaya.kris.market.soap.OrderXML;
