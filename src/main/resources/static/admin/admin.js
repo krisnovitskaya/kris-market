@@ -45,6 +45,20 @@ angular.module('app').controller('adminController', function ($scope, $http) {
     };
 
 
+    $scope.fillOrderTable = function () {
+            $http({
+                    url: contextPath + '/api/v1/orders/get',
+                    method: 'POST',
+                    params:{
+                        status:  $scope.status
+                    }
+                })
+                .then(function (response) {
+                    $scope.adminOrders = response.data;
+                   });
+        };
+
+
 
     $scope.getCategory();
 });

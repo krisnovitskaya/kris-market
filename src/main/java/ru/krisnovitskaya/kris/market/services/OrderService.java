@@ -19,9 +19,9 @@ import java.util.stream.Collectors;
 public class OrderService {
     private OrderRepository orderRepository;
 
-    public List<Order> findAll() {
-        return orderRepository.findAll();
-    }
+//    public List<Order> findAll() {
+//        return orderRepository.findAll();
+//    }
 
     public Order save(Order order) {
         return orderRepository.save(order);
@@ -31,6 +31,16 @@ public class OrderService {
     public List<OrderDto> findAllUserOrdersDtosByUsername(String username) {
         return orderRepository.findAllOrdersByUsername(username).stream().map(OrderDto::new).collect(Collectors.toList());
     }
+
+    public List<OrderDto> findAll(){
+        return orderRepository.findAll().stream().map(OrderDto::new).collect(Collectors.toList());
+    }
+
+    public List<OrderDto> findAllByStatus(Order.OrderStatus status){
+        return orderRepository.findOrdersByStatus(status).stream().map(OrderDto::new).collect(Collectors.toList());
+    }
+
+
 
     public List<OrderXML> findAllUserOrderXMLByUsername(String username) {
         List<Order> orders = orderRepository.findAllOrdersByUsernameWithItems(username);
