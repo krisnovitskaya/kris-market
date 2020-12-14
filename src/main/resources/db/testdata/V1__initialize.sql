@@ -12,7 +12,7 @@ create table profiles(
   email                 varchar(255),
   phone                 int,
   birth_year            int,
-  sex                   varchar(3),
+  sex                   boolean,
   town                  varchar(50),
   foreign key (user_id) references users (id)
 );
@@ -40,8 +40,8 @@ values
 
 insert into profiles (user_id, firstname, lastname, email, phone, birth_year, sex, town)
 values
-(1, 'Bob', 'White','bob@mail.ru', 1234567, 1980, 'm', 'London'),
-(2, 'Elena', 'Sorokina','lenaizpolipropilena@yahoo.com', 7654321, 1985, 'f', 'Moscow');
+(1, 'Bob', 'White','bob@mail.ru', 1234567, 1980, true, 'London'),
+(2, 'Elena', 'Sorokina','lenaizpolipropilena@yahoo.com', 7654321, 1985, false, 'Moscow');
 
 
 
@@ -54,7 +54,7 @@ values
 insert into users_roles (user_id, role_id)
 values
 (1, 1),
-(1, 2),
+(2, 2),
 (2, 1);
 
 create table products (
@@ -79,27 +79,7 @@ CREATE TABLE products_categories (
 
 insert into categories (name)
 values
-('category 1'), ('category 2'), ('category 3'), ('category 4');
-
-
-
-create table orders (
-    id                      bigserial primary key,
-    user_id                 bigint references users(id),
-    price                   int,
-    address                 varchar(1000),
-    phone                   int
-);
-
-create table order_items (
-    id                      bigserial primary key,
-    product_id              bigint references products(id),
-    order_id                bigint references orders(id),
-    price                   int,
-    price_per_product       int,
-    quantity                int
-);
-
+('category 1'), ('category 2'), ('category 3'), ('category 4'), ('test category');
 
 insert into products (title, price)
 values
@@ -128,6 +108,29 @@ insert into products_categories (product_id, category_id)
 values
 (1, 1), (2, 2), (3, 3), (4, 4),
 (5, 1), (1, 2), (2, 3), (3, 4),
+(6, 1), (7, 2), (8, 3), (8, 4),
 (9, 1), (10, 2), (11, 3), (12, 4),
 (13, 1), (14, 2), (15, 3), (16, 4),
 (17, 1), (18, 2), (19, 3), (20, 4);
+
+
+CREATE TYPE order_status AS ENUM('NEW', 'IN_PROGRESS', 'DONE');
+
+create table orders (
+    id                      bigserial primary key,
+    user_id                 bigint references users(id),
+    price                   int,
+    address                 varchar(1000),
+    phone                   int,
+    status                  order_status
+);
+
+create table order_items (
+    id                      bigserial primary key,
+    product_id              bigint references products(id),
+    order_id                bigint references orders(id),
+    price                   int,
+    price_per_product       int,
+    quantity                int
+);
+

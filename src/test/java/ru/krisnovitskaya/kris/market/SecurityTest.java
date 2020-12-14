@@ -41,6 +41,7 @@ public class SecurityTest {
 
 
     @Test
+    @WithMockUser(username = "user1", roles = "USER")
     public void checkAccessToCart() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/cart"))
                 .andDo(MockMvcResultHandlers.print())

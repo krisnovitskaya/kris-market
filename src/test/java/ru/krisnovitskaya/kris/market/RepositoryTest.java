@@ -40,11 +40,11 @@ public class RepositoryTest {
 
     @Test
     public void checkFindAllWithSpec(){
-        ProductFilter filter = makeFilterWithSpec(null, null, null, List.of("category 1", "category 2"));
+        ProductFilter filter = makeFilterWithSpec(null, null, null, List.of("1", "2"));
         Page<Product> content = productRepository.findAll(filter.getSpec(), PageRequest.of(0, 5));
         Assertions.assertNotNull(content);
         Assertions.assertNotNull(content.getContent());
-        Assertions.assertEquals(9, content.getTotalElements());
+        Assertions.assertEquals(11, content.getTotalElements());
 
     }
 
