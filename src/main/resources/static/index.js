@@ -32,6 +32,9 @@
             .when('/admin', {
                 templateUrl: 'admin/admin.html',
                 controller: 'adminController'
+            }).when('/manager', {
+                templateUrl: 'manager/manager.html',
+                controller: 'managerController'
             })
             .when('/orders', {
                  templateUrl: 'orders/orders.html',

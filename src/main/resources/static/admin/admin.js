@@ -38,46 +38,14 @@ angular.module('app').controller('adminController', function ($scope, $http) {
                     categories:  $scope.categories
                 }
             })
-            .then(function (response) {
-                $scope.newProduct = null;
-                alert('Добавлен новый продукт');
-            });
-    };
-
-
-    $scope.fillOrderTable = function () {
-            $http({
-                    url: contextPath + '/api/v1/orders/get',
-                    method: 'POST',
-                    params:{
-                        status:  $scope.status
-                    }
-                })
-                .then(function (response) {
-                    $scope.adminOrders = response.data;
-                   });
-        };
-
-
-    $scope.setNewStatus = function(orderId, selectedStatus){
-               $http({
-                    url: contextPath + '/api/v1/orders/set_status',
-                    method: 'PUT',
-                    params:{
-                        id: orderId,
-                        status: selectedStatus
-                    }
-                })
-                .then( function successCallback(response) {
-                        alert('Статус заказа ' + orderId + ' обновлен')
-                        $scope.status == null;
-                        $scope.fillOrderTable();
-                    }, function errorCallback(response){
-                          alert('Wrong input data');
+            .then( function successCallback(response) {
+                        $scope.newProduct = null;
+                        alert('Добавлен новый продукт');
+                 }, function errorCallback(response){
+                    $scope.newProduct = null;
+                    alert('Product add fail. Wrong input data.');
                 });
     };
-
-
 
     $scope.getCategory();
 });

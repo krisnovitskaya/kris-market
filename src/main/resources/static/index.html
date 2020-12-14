@@ -30,6 +30,7 @@
     <a ng-show="isUserLoggedIn()" class="btn btn-outline-warning" href="#!/cart">Корзина</a>
     <a ng-show="isUserLoggedIn()" class="btn btn-outline-warning" href="#!/orders">Заказы</a>
     <a ng-show="isUserLoggedIn()" class="btn btn-outline-warning" href="#!/profile">Профиль</a>
+    <a ng-show="isUserLoggedIn() && isManager()" class="btn btn-outline-warning" href="#!/manager">Управление заказами</a>
     <a ng-show="isUserLoggedIn() && isAdmin()" class="btn btn-outline-warning" href="#!/admin">Админка</a>
     <button ng-show="isUserLoggedIn()" class="btn btn-danger" ng-click="tryToLogout()">Выйти</button>
 
@@ -38,6 +39,7 @@
     <script src="index.js"></script>
     <script src="store/store.js"></script>
     <script src="admin/admin.js"></script>
+    <script src="manager/manager.js"></script>
     <script src="cart/cart.js"></script>
     <script src="auth/auth.js"></script>
     <script src="reg/reg.js"></script>

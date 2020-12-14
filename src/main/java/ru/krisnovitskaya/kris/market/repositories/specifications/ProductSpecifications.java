@@ -20,6 +20,10 @@ public class ProductSpecifications {
         return (Specification<Product>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.like(root.get("title"), String.format("%%%s%%", titlePart));
     }
 
+    public static Specification<Product> isActive() {
+        return (Specification<Product>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.isTrue(root.get("active"));
+    }
+
 
 
     public static Specification<Product> haveCategory(List<Long> categories) {

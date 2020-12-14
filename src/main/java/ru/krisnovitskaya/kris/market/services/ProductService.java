@@ -46,6 +46,11 @@ public class ProductService {
         return new PageDto<ProductDto>(content.getContent().stream().map(ProductDto::new).collect(Collectors.toList()), content.getPageable(), content.getTotalElements());
     }
 
+    public Product saveNewProduct(Product product){
+        product.setActive(true);
+        return saveOrUpdate(product);
+    }
+
     public Product saveOrUpdate(Product product) {
         return productRepository.save(product);
     }

@@ -12,7 +12,9 @@ import ru.krisnovitskaya.kris.market.dto.PageDto;
 import ru.krisnovitskaya.kris.market.dto.ProductDto;
 import ru.krisnovitskaya.kris.market.entities.Category;
 import ru.krisnovitskaya.kris.market.entities.Product;
+import ru.krisnovitskaya.kris.market.exceptions.MarketError;
 import ru.krisnovitskaya.kris.market.exceptions.ResourceNotFoundException;
+import ru.krisnovitskaya.kris.market.repositories.specifications.ProductSpecifications;
 import ru.krisnovitskaya.kris.market.services.CategoryService;
 import ru.krisnovitskaya.kris.market.services.ProductService;
 import ru.krisnovitskaya.kris.market.utils.ProductFilter;
@@ -38,7 +40,7 @@ public class ProductController {
         }
 
         ProductFilter productFilter = new ProductFilter(params);
-        PageDto<ProductDto> ppdto = productService.findAll(productFilter.getSpec(), page - 1, 5);
+        PageDto<ProductDto> ppdto = productService.findAll(productFilter.getSpec().and(ProductSpecifications.isActive()), page - 1, 5);
         return  ppdto;
     }
 
@@ -50,6 +52,12 @@ public class ProductController {
     @Secured("ROLE_ADMIN")
     @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<?> createProduct(@RequestBody Product p, @RequestParam MultiValueMap<String, String> params) {
+        if(p.getTitle() == null){
+            return new ResponseEntity<>(new MarketError(HttpStatus.BAD_REQUEST.value(), "Product title = null"),HttpStatus.BAD_REQUEST);
+        }
+        if(p.getPrice() < 0){
+            return new ResponseEntity<>(new MarketError(HttpStatus.BAD_REQUEST.value(), "Product price is negative"),HttpStatus.BAD_REQUEST);
+        }
         List<Category> productCategories = new ArrayList<>();
         if(params.containsKey("categories")){
             List<Long> ids = params.get("categories").stream().map(s -> Long.parseLong(s)).collect(Collectors.toList());
@@ -57,7 +65,7 @@ public class ProductController {
         }
         p.setId(null);
         p.setCategories(productCategories);
-        productService.saveOrUpdate(p);
+        productService.saveNewProduct(p);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

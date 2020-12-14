@@ -59,4 +59,14 @@ angular.module('app').controller('authController', function ($scope, $http, $loc
             }
             return false;
         }
+
+     $scope.isManager = function () {
+                 $scope.getUserRole();
+                 for (let i = 0; i < $scope.userRoles.length; i++ ){
+                     if(angular.equals("ROLE_MANAGER", $scope.userRoles[i])){
+                         return true;
+                     }
+                 }
+                 return false;
+             }
 });

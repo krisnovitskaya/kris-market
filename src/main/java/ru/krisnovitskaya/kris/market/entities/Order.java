@@ -24,7 +24,7 @@ public class Order {
     private User user;
 
     @OneToMany(mappedBy = "order")
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
     private List<OrderItem> items;
 
     @Column(name = "price")

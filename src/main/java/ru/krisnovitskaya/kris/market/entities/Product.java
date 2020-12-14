@@ -25,6 +25,9 @@ public class Product {
     @Column(name = "price")
     private int price;
 
+    @Column(name = "active")
+    private Boolean active;
+
     @ManyToMany
     @JoinTable(name = "products_categories",
             joinColumns = @JoinColumn(name = "product_id"),

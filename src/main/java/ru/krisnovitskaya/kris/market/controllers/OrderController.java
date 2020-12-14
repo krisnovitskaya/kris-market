@@ -49,7 +49,7 @@ public class OrderController {
     }
 
 
-    @Secured("ROLE_ADMIN")
+    @Secured({"ROLE_ADMIN","ROLE_MANAGER"})
     @PostMapping(value = "/get", produces = "application/json")
     public List<OrderDto> getAllOrdersByStatus(Order.OrderStatus status) {
         if (status == null) {
@@ -59,7 +59,7 @@ public class OrderController {
         }
     }
 
-    @Secured("ROLE_ADMIN")
+    @Secured({"ROLE_ADMIN","ROLE_MANAGER"})
     @PutMapping("/set_status")
     public ResponseEntity<?> updateStatus(@RequestParam Long id, Order.OrderStatus status) {
         if(status == null){
