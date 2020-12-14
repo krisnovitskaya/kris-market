@@ -18,4 +18,10 @@ public class ExceptionControllerAdvice {
         return new ResponseEntity<>(err, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler
+    public ResponseEntity<?> handleWrongStatusException(WrongOrderStatusException e) {
+        log.error(e.getMessage());
+        MarketError err = new MarketError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+        return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
+    }
 }

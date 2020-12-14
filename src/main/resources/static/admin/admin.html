@@ -54,6 +54,7 @@
             <td>Телефон</td>
             <td>Статус</td>
             <td>Состав заказа</td>
+            <td></td>
 
         </tr>
 
@@ -69,6 +70,30 @@
                 <ul>
                     <li ng-repeat="i in ao.items" style="list-style-type: none;">{{i.quantity}}&emsp;{{i.productTitle}}</li>
                 </ul>
+            </td>
+            <td ng-if="ao.status == 'DONE'"></td>
+            <td ng-if="ao.status == 'NEW'">
+                <form novalidate ng-submit="setNewStatus(ao.id, selectedStatus)">
+                    <div class="form-group col-md-6">
+                        <label for="setStatus">Выберите статус заказа</label>
+                        <select class="form-control" ng-model="selectedStatus" id="setStatus">
+                            <option value="IN_PROGRESS">IN_PROGRESS</option>
+                            <option value="DONE">DONE</option>
+                        </select>
+                        <button class="btn btn-success" type="submit">Обновить</button>
+                    </div>
+                </form>
+            </td>
+            <td ng-if="ao.status == 'IN_PROGRESS'">
+                <form novalidate ng-submit="setNewStatus(ao.id, selectedStatus)">
+                    <div class="form-group col-md-6">
+                        <label for="setStatus2">Выберите статус заказа</label>
+                        <select class="form-control" ng-model="selectedStatus" id="setStatus2">
+                            <option value="DONE">DONE</option>
+                        </select>
+                        <button class="btn btn-success" type="submit">Обновить</button>
+                    </div>
+                </form>
             </td>
         </tr>
         </tbody>

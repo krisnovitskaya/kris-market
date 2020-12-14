@@ -59,6 +59,25 @@ angular.module('app').controller('adminController', function ($scope, $http) {
         };
 
 
+    $scope.setNewStatus = function(orderId, selectedStatus){
+               $http({
+                    url: contextPath + '/api/v1/orders/set_status',
+                    method: 'PUT',
+                    params:{
+                        id: orderId,
+                        status: selectedStatus
+                    }
+                })
+                .then( function successCallback(response) {
+                        alert('Статус заказа ' + orderId + ' обновлен')
+                        $scope.status == null;
+                        $scope.fillOrderTable();
+                    }, function errorCallback(response){
+                          alert('Wrong input data');
+                });
+    };
+
+
 
     $scope.getCategory();
 });

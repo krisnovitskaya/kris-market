@@ -3,6 +3,7 @@ package ru.krisnovitskaya.kris.market.controllers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import ru.krisnovitskaya.kris.market.dto.CartDto;
 import ru.krisnovitskaya.kris.market.dto.OrderDto;
 import ru.krisnovitskaya.kris.market.entities.Order;
 import ru.krisnovitskaya.kris.market.entities.User;
+import ru.krisnovitskaya.kris.market.exceptions.MarketError;
 import ru.krisnovitskaya.kris.market.exceptions.ResourceNotFoundException;
 import ru.krisnovitskaya.kris.market.services.OrderService;
 import ru.krisnovitskaya.kris.market.services.UserService;
@@ -55,6 +57,17 @@ public class OrderController {
         } else {
             return orderService.findAllByStatus(status);
         }
+    }
+
+    @Secured("ROLE_ADMIN")
+    @PutMapping("/set_status")
+    public ResponseEntity<?> updateStatus(@RequestParam Long id, Order.OrderStatus status) {
+        if(status == null){
+            return new ResponseEntity<>(new MarketError(HttpStatus.BAD_REQUEST.value(), "Wrong status"), HttpStatus.BAD_REQUEST);
+        }
+        Order order = orderService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to find Order with id: " + id));
+        orderService.checkAndSave(order, status);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
 
