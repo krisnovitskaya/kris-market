@@ -16,10 +16,7 @@ import ru.krisnovitskaya.kris.market.entities.Role;
 import ru.krisnovitskaya.kris.market.entities.User;
 import ru.krisnovitskaya.kris.market.repositories.UserRepository;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -73,7 +70,7 @@ public class UserService implements UserDetailsService {
         Profile profile = new Profile();
         user.setProfile(profile);
         profile.setUser(user);
-        user.setRoles(Arrays.asList(roleService.findByName("ROLE_USER")));
+        user.setRoles(Collections.singletonList(roleService.findByName("ROLE_USER")));
         profile.setEmail(newUser.getEmail());
         save(user);
     }

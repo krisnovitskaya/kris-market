@@ -27,8 +27,7 @@ angular.module('app').controller('authController', function ($scope, $http, $loc
         if ($scope.user.password) {
             $scope.user.password = null;
         }
-        $location.path('/auth');
-
+            $location.url('/auth');
     };
 
     $scope.clearUser = function () {
