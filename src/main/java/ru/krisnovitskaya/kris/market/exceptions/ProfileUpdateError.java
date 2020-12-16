@@ -11,18 +11,23 @@ import java.util.stream.Collectors;
 
 public class ProfileUpdateError {
     private int status;
-    private List<String> messages;
+    private String message;
     private Date timestamp;
 
     public ProfileUpdateError(List<ObjectError> errors) {
         this.status = HttpStatus.BAD_REQUEST.value();
-        this.messages = errors.stream().map(e -> e.getDefaultMessage()).collect(Collectors.toList());
         this.timestamp = new Date();
+        StringBuilder sb = new StringBuilder();
+        for (ObjectError error : errors) {
+            sb.append(error.getDefaultMessage());
+            sb.append("; ");
+        }
+        this.message = sb.toString().trim();
     }
 
     public ProfileUpdateError(String message) {
         this.status = HttpStatus.BAD_REQUEST.value();
-        this.messages = new ArrayList<>(Arrays.asList(message));
+        this.message = message;
         this.timestamp = new Date();
     }
 }

@@ -11,12 +11,13 @@ angular.module('app').controller('cartController', function ($scope, $http, $loc
                             address: $scope.newOrder.address
                         }
                     })
-                        .then(function (response) {
-                            console.log("ok");
+                        .then( function successCallback(response) {
                             $scope.newOrder = null;
                             $scope.cartContentRequest();
                             $location.url('/orders');
-                        });
+                        }, function errorCallback(response){
+                            alert(response.data.message);
+                    });
         };
 
 

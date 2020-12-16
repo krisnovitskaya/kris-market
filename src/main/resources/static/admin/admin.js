@@ -47,5 +47,36 @@ angular.module('app').controller('adminController', function ($scope, $http) {
                 });
     };
 
+        $scope.showProduct = function () {
+            $http({
+                url: contextPath + '/api/v1/products/' + $scope.productId,
+                method: 'GET'
+            })
+            .then( function successCallback(response) {
+                    $scope.ChangingProduct = response.data;
+                 }, function errorCallback(response){
+                    alert(response.data.message);
+                });
+        };
+
+    $scope.updateProduct = function () {
+        $http({
+                url: contextPath + '/api/v1/products',
+                method: 'PUT',
+                data: $scope.ChangingProduct,
+                params:{
+                    categories:  $scope.updateCategories
+                }
+            })
+            .then( function successCallback(response) {
+                    $scope.productId = $scope.ChangingProduct.id;
+                    $scope.showProduct();
+                 }, function errorCallback(response){
+                    $scope.productId = $scope.ChangingProduct.id;
+                    $scope.showProduct();
+                    alert(response.data.message);
+                });
+    };
+
     $scope.getCategory();
 });

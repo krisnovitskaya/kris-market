@@ -21,9 +21,6 @@ import java.util.stream.Collectors;
 public class OrderService {
     private OrderRepository orderRepository;
 
-//    public List<Order> findAll() {
-//        return orderRepository.findAll();
-//    }
 
     public Order save(Order order) {
         return orderRepository.save(order);

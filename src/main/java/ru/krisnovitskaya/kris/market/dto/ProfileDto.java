@@ -23,6 +23,7 @@ public class ProfileDto {
     @Positive(message = "number must be positive")
     private Integer phone;
 
+
     @Min(value = 1900, message = "year must be 1900 or upper")
     @Max(value = 2002, message = "year must be 2002 or lower")
     private Integer birthYear;

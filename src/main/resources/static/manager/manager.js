@@ -29,7 +29,7 @@ angular.module('app').controller('managerController', function ($scope, $http) {
                         $scope.status == null;
                         $scope.fillOrderTable();
                     }, function errorCallback(response){
-                          alert('Wrong input data');
+                          alert(response.data.message);
                 });
     };
 

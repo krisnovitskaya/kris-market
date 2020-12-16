@@ -151,7 +151,7 @@ create table orders (
     user_id                 bigint references users(id),
     price                   int,
     address                 varchar(1000),
-    phone                   int,
+    phone                   bigint,
     status                  order_status
 );
 

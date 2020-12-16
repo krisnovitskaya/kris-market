@@ -36,6 +36,10 @@ public class ProductSpecifications {
         };
     }
 
+
+    /*
+        special for ws. force fetch category. avoid  "failed to lazily initialize... no Session"
+    */
     public static Specification<Product> fetchCategory(){
         return new Specification<Product>() {
             @Override

@@ -70,7 +70,7 @@
             <xs:element name="id" type="xs:long"/>
             <xs:element name="username" type="xs:string"/>
             <xs:element name="price" type="xs:int"/>
-            <xs:element name="phone" type="xs:int"/>
+            <xs:element name="phone" type="xs:long"/>
             <xs:element name="address" type="xs:string"/>
             <xs:element name="itemOrder" maxOccurs="unbounded" type="tns:itemOrder"/>
         </xs:sequence>

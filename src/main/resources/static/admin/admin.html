@@ -1,4 +1,61 @@
 <div>
+    <h3>Фильтр</h3>
+    <form novalidate ng-submit="showProduct()">
+        <div class="form-group col-md-2">
+            <label for="productID">ID продукта</label>
+            <input class="form-control" type="number" ng-model="productId" id="productID">
+            <button class="btn btn-success" type="submit">Найти</button>
+        </div>
+    </form>
+</br>
+</br>
+</br>
+
+    <form novalidate ng-submit="updateProduct()">
+    <table class="table table-hover" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>ID</td>
+            <td>Название</td>
+            <td>Цена</td>
+            <td>Категория</td>
+            <td></td>
+            <td>Доступно к заказу</td>
+            <td></td>
+        </tr>
+        <tbody>
+
+        <tr ng-show="ChangingProduct != null">
+            <td>{{ChangingProduct.id}}</td>
+            <td>
+                <input class="form-control" type="text" ng-model="ChangingProduct.title" placeholder="{{ChangingProduct.title}}">
+            </td>
+            <td>
+                <input class="form-control" type="number" ng-model="ChangingProduct.price" placeholder="{{ChangingProduct.price}}">
+            </td>
+            <td>
+                <ul>
+                    <li ng-repeat="c in ChangingProduct.categories" style="list-style-type: none;">{{c.name}}</li>
+                </ul>
+            </td>
+            <td>
+                <label for="ChangingProductCategories">Выберите Категории</label>
+                <select class="form-control" multiple="multiple"  ng-model="updateCategories" id="ChangingProductCategories">
+                    <option value="{{c.id}}" ng-repeat="c in Category">{{c.name}}</option>
+                </select>
+            </td>
+            <td>
+                <label><input class="form-control" type="radio" ng-model="ChangingProduct.active"  ng-value="true" />да </label>
+                <label><input class="form-control" type="radio" ng-model="ChangingProduct.active"  ng-value="false" />нет</label>
+            </td>
+            <td>
+                <button class="btn btn-danger" type="submit">Обновить</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    </form>
+
+
     <h3>Добавить новый товар</h3>
     <form novalidate ng-submit="submitCreateNewProduct()">
         <div class="form-group col-md-6">
@@ -20,9 +77,11 @@
         </div>
     </form>
 
+    </br>
+    </br>
     <form novalidate ng-submit="submitCreateNewCategory()">
         <div class="form-group col-md-6">
-            <label for="newCategoryName">Название</label>
+            <label for="newCategoryName">Название категории</label>
             <input class="form-control" type="text" ng-model="newCategory.name" id="newCategoryName">
         </div>
         <div>

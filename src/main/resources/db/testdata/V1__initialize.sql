@@ -12,7 +12,7 @@ create table profiles(
   email                 varchar(255),
   phone                 int,
   birth_year            int,
-  sex                   boolean,
+  sex                   bit,
   town                  varchar(50),
   foreign key (user_id) references users (id)
 );
@@ -36,18 +36,20 @@ CREATE TABLE users_roles (
 insert into users (username, password)
 values
 ('user1', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i'),
-('user2', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i');
+('user2', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i'),
+('user3', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i');
 
 insert into profiles (user_id, firstname, lastname, email, phone, birth_year, sex, town)
 values
-(1, 'Bob', 'White','bob@mail.ru', 1234567, 1980, true, 'London'),
-(2, 'Elena', 'Sorokina','lenaizpolipropilena@yahoo.com', 7654321, 1985, false, 'Moscow');
+(1, 'Bob', 'White','bob@mail.ru', 1234567, 1980, 1, 'London'),
+(2, 'Elena', 'Sorokina','lenaizpolipropilena@yahoo.com', 7654321, 1985, 0, 'Moscow'),
+(3, 'Robin', 'Bobin','bobinbarabek@yahoo.com', 254321, 1995, 1, 'New-York');
 
 
 
 insert into roles (name)
 values
-('ROLE_USER'), ('ROLE_ADMIN'), ('ROLE_OWNER');
+('ROLE_USER'), ('ROLE_MANAGER'), ('ROLE_ADMIN');
 
 
 
@@ -55,12 +57,15 @@ insert into users_roles (user_id, role_id)
 values
 (1, 1),
 (2, 2),
-(2, 1);
+(3, 3),
+(3, 2);
+
 
 create table products (
     id                      bigserial primary key,
     title                   varchar(255),
-    price                   int
+    price                   int,
+    active                  bit
 );
 
 create table categories (
@@ -81,28 +86,28 @@ insert into categories (name)
 values
 ('category 1'), ('category 2'), ('category 3'), ('category 4'), ('test category');
 
-insert into products (title, price)
+insert into products (title, price, active)
 values
-('Potato', 30),
-('Tomato', 160),
-('Carrot', 40),
-('Cabbage', 35),
-('Pepper', 185),
-('Chili pepper', 190),
-('Eggplant', 200),
-('Cauliflower', 170),
-('Onion', 25),
-('Garlic', 150),
-('Parsley', 125),
-('Celery', 125),
-('Radish', 45),
-('Cucumber', 155),
-('Pumpkin', 190),
-('Courgette', 150),
-('Asparagus', 280),
-('Beets', 198),
-('Turnip', 141),
-('Ginger', 299);
+('Potato', 30, 1),
+('Tomato', 160, 1),
+('Carrot', 40, 1),
+('Cabbage', 35, 1),
+('Pepper', 185, 1),
+('Chili pepper', 190, 1),
+('Eggplant', 200, 1),
+('Cauliflower', 170, 1),
+('Onion', 25, 1),
+('Garlic', 150, 1),
+('Parsley', 125, 1),
+('Celery', 125, 1),
+('Radish', 45, 1),
+('Cucumber', 155, 1),
+('Pumpkin', 190, 1),
+('Courgette', 150, 1),
+('Asparagus', 280, 1),
+('Beets', 198, 1),
+('Turnip', 141, 1),
+('Ginger', 299, 1);
 
 insert into products_categories (product_id, category_id)
 values
@@ -121,7 +126,7 @@ create table orders (
     user_id                 bigint references users(id),
     price                   int,
     address                 varchar(1000),
-    phone                   int,
+    phone                   bigint,
     status                  order_status
 );
 

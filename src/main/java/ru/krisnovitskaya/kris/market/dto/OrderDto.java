@@ -15,7 +15,7 @@ public class OrderDto {
     private List<OrderItemDto> items;
     private int price;
     private String address;
-    private int phone;
+    private long phone;
     private String status;
 
     public OrderDto(Order order){

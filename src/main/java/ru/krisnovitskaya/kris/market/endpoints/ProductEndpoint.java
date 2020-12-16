@@ -2,6 +2,7 @@ package ru.krisnovitskaya.kris.market.endpoints;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
@@ -38,6 +39,8 @@ public class ProductEndpoint {
         response.setProduct(productService.getXMLProductById(request.getId()));
         return response;
     }
+
+
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getProductsRequest")
     @ResponsePayload

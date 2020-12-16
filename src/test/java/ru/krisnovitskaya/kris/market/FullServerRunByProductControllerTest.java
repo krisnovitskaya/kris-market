@@ -46,18 +46,27 @@ public class FullServerRunByProductControllerTest {
         Assertions.assertEquals(4, products.getTotalPages());
     }
 
-    @Test
-    public void checkDeleteAll(){
-        restTemplate.delete("/api/v1/products");
-        PageDto<ProductDto> products = restTemplate.getForObject("/api/v1/products", PageDto.class);
-        Assertions.assertEquals(0, products.getTotalElements());
-    }
 
     @Test
-    public void checkDeleteById(){
-        restTemplate.delete("/api/v1/products/{id}", 10L);
-        ResponseEntity<?> entity = restTemplate.getForEntity("/api/v1/products/{id}", MarketError.class, 10L);
-        Assertions.assertEquals(HttpStatus.NOT_FOUND, entity.getStatusCode());
+    public void checkProductUpdate(){
+        ResponseEntity<?> entity = restTemplate.getForEntity("/api/v1/products/{id}", Product.class, 10L);
+        Product productFromDB = (Product) entity.getBody();
+        Assertions.assertNotNull(productFromDB);
+
+        System.out.println(productFromDB);
+        productFromDB.setPrice(555);
+        Assertions.assertEquals(555,productFromDB.getPrice());
+
+        productFromDB.setActive(false);
+
+
+        restTemplate.put("/api/v1/products", productFromDB);
+
+        ResponseEntity<?> changingEntity = restTemplate.getForEntity("/api/v1/products/{id}", Product.class, 10L);
+        Product changingProductFromDB = (Product) changingEntity.getBody();
+        Assertions.assertEquals(555,changingProductFromDB.getPrice());
+        Assertions.assertFalse(changingProductFromDB.getActive());
     }
+
 
 }

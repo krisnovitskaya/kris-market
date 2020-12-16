@@ -34,14 +34,14 @@ public class Order {
     private String address;
 
     @Column(name = "phone")
-    private int phone;
+    private long phone;
 
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
-    public Order(User user, Cart cart, String address, int phone) {
+    public Order(User user, Cart cart, String address, long phone) {
         this.user = user;
         this.price = cart.getPrice();
         this.items = new ArrayList<>();

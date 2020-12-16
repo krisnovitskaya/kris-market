@@ -37,15 +37,20 @@ public class OrderController {
 
 
     @PostMapping("/create")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void makeOrder(Principal principal,
-                          @RequestParam(name = "phone") int phone,
+    public ResponseEntity<?> makeOrder(Principal principal,
+                          @RequestParam(name = "phone") long phone,
                           @RequestParam(name = "address") String address) {
+
+
+        if((phone < 0) || (String.valueOf(phone).length() != 10)){
+            return new ResponseEntity<>(new MarketError(HttpStatus.BAD_REQUEST.value(), "Wrong input Phone number. Phone length must be 10"), HttpStatus.BAD_REQUEST);
+        }
 
         User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("Unable to create order for user: " + principal.getName() + ". User doesn't exist"));
         Order order = new Order(user, cart, address, phone);
         orderService.save(order);
         cart.clear();
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 

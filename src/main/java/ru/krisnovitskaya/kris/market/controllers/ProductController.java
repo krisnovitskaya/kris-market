@@ -60,7 +60,7 @@ public class ProductController {
         }
         List<Category> productCategories = new ArrayList<>();
         if(params.containsKey("categories")){
-            List<Long> ids = params.get("categories").stream().map(s -> Long.parseLong(s)).collect(Collectors.toList());
+            List<Long> ids = params.get("categories").stream().map(Long::parseLong).collect(Collectors.toList());
             productCategories = categoryService.getByListIds(ids);
         }
         p.setId(null);
@@ -71,19 +71,21 @@ public class ProductController {
 
     @Secured("ROLE_ADMIN")
     @PutMapping(consumes = "application/json", produces = "application/json")
-    public Product updateProduct(@RequestBody Product p) {
-        return productService.saveOrUpdate(p);
+    public ResponseEntity<?> updateProduct(@RequestBody Product p, @RequestParam MultiValueMap<String, String> params) {
+        if(p.getTitle() == null){
+            return new ResponseEntity<>(new MarketError(HttpStatus.BAD_REQUEST.value(), "Product new Title = null"),HttpStatus.BAD_REQUEST);
+        }
+        if(p.getPrice() < 0){
+            return new ResponseEntity<>(new MarketError(HttpStatus.BAD_REQUEST.value(), "Product new Price is negative"),HttpStatus.BAD_REQUEST);
+        }
+        List<Category> productCategories = new ArrayList<>();
+        if(params.containsKey("categories")){
+            List<Long> ids = params.get("categories").stream().map(Long::parseLong).collect(Collectors.toList());
+            productCategories = categoryService.getByListIds(ids);
+            p.setCategories(productCategories);
+        }
+        ProductDto dto = new ProductDto(productService.saveOrUpdate(p));
+        return new ResponseEntity<>(dto,HttpStatus.OK);
     }
 
-    @Secured("ROLE_ADMIN")
-    @DeleteMapping
-    public void deleteAll() {
-        productService.deleteAll();
-    }
-
-    @Secured("ROLE_ADMIN")
-    @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id) {
-        productService.deleteById(id);
-    }
 }
