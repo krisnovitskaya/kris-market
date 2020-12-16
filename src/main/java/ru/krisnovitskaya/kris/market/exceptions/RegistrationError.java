@@ -26,7 +26,6 @@ public class RegistrationError {
             sb.append("; ");
         }
         this.message = sb.toString().trim();
-        System.out.println(this.message);
     }
 
     public RegistrationError(String message) {

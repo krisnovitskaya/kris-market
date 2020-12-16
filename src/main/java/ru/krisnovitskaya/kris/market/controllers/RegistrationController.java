@@ -19,6 +19,12 @@ public class RegistrationController {
     private final UserService userService;
 
 
+    /**
+     * Check input data and create new user
+     * @param newUser
+     * @param bindingResult
+     * @return HttpStatus
+     */
     @PostMapping
     public ResponseEntity<?> registerNewUser(@RequestBody @Validated NewUserDto newUser, BindingResult bindingResult) {
         if(newUser.getUsername() == null || newUser.getEmail() == null || newUser.getPassword() == null || newUser.getConfirmationPassword() == null){

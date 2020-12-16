@@ -23,12 +23,22 @@ import java.util.stream.Collectors;
 public class CategoryController {
     private final CategoryService categoryService;
 
+
+    /**
+     * Return all Categories
+     * @return List<Category>
+     */
     @GetMapping(produces = "application/json")
     public List<Category> getAllCategories() {
         return categoryService.getAll();
     }
 
 
+    /**
+     * Create new Category for products and save it
+     * @param newCategory Category include category.name
+     * @return HttpStatus
+     */
     @Secured("ROLE_ADMIN")
     @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<?> createCategory(@RequestBody Category newCategory) {

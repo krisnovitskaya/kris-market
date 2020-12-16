@@ -26,6 +26,12 @@ public class ProfileController {
     private final UserService userService;
     private final BCryptPasswordEncoder encoder;
 
+
+    /**
+     * Returns profile info current authenticated user
+     * @param principal
+     * @return ProfileDto
+     */
     @GetMapping(produces = "application/json")
     public ProfileDto showProfile(Principal principal) {
         Profile p = profileService.findProfileByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("Unable to find profile for current user"));
@@ -33,15 +39,21 @@ public class ProfileController {
 
     }
 
-
+    /**
+     * Check input data, current user password and update users profile
+     * @param changedProfile new changedProfile data
+     * @param password
+     * @param principal
+     * @param bindingResult for Validate input changedProfile data
+     * @return HttpStatus
+     */
     @PutMapping(produces = "application/json")
     public ResponseEntity<?> changeProfile(@RequestBody @Validated ProfileDto changedProfile, @RequestParam String password, Principal principal, BindingResult bindingResult) {
         User currentUser = userService.findByUsername(principal.getName()).orElseThrow(() ->
                 new ResourceNotFoundException("Unable to find current user"));
         if (password == null || !encoder.matches(password, currentUser.getPassword())) {
             ProfileUpdateError err = new ProfileUpdateError("Incorrect or null password");
-            //return new ResponseEntity<>(new ProfileUpdateError("Incorrect or null password"), HttpStatus.BAD_REQUEST);
-            return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ProfileUpdateError("Incorrect or null password"), HttpStatus.BAD_REQUEST);
         }
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(new ProfileUpdateError(bindingResult.getAllErrors()), HttpStatus.BAD_REQUEST);

@@ -14,9 +14,13 @@ import java.util.stream.Collectors;
 public class ProductFilter {
     private Specification<Product> spec;
 
+    /**
+     * Create Specification<Product> with input params (title, max/min price, categories)
+     * @param params
+     */
+
     public ProductFilter(MultiValueMap<String, String> params) {
-        StringBuilder filterDefinitionBuilder = new StringBuilder();
-        spec = Specification.where(null);
+            spec = Specification.where(null);
 
 
         String filterTitle = params.getFirst("title");
@@ -40,7 +44,6 @@ public class ProductFilter {
             List<String> categories = params.get("categories");
             List<Long> categoriesIDs = categories.stream().map(s -> Long.parseLong(s)).collect(Collectors.toList());
             spec = spec.and(ProductSpecifications.haveCategory(categoriesIDs));
-            filterDefinitionBuilder.append("&categories=").append(categoriesIDs);
         }
     }
 }

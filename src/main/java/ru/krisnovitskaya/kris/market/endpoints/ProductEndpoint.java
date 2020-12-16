@@ -32,6 +32,11 @@ public class ProductEndpoint {
     }
 
 
+    /**
+     * Return info about product with input id
+     * @param request GetProductByIdRequest
+     * @return GetProductByIdResponse
+     */
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getProductByIdRequest")
     @ResponsePayload
     public GetProductByIdResponse getProduct(@RequestPayload GetProductByIdRequest request) {
@@ -41,7 +46,11 @@ public class ProductEndpoint {
     }
 
 
-
+    /**
+     * Return info about product matching input params
+     * @param request GetProductsRequest
+     * @return GetProductsResponse
+     */
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getProductsRequest")
     @ResponsePayload
     public GetProductsResponse getProducts(@RequestPayload GetProductsRequest request) {

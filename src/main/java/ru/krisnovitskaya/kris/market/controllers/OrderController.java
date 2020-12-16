@@ -30,12 +30,25 @@ public class OrderController {
     private OrderService orderService;
     private Cart cart;
 
+
+    /**
+     * Return info about orders current authenticated user
+     * @param principal
+     * @return List<OrderDto>
+     */
     @GetMapping(produces = "application/json")
     public List<OrderDto> showOrders(Principal principal) {
         return orderService.findAllUserOrdersDtosByUsername(principal.getName());
     }
 
 
+    /**
+     * Create new currentusers` order and save it, data from cart, clear cart after save
+     * @param principal
+     * @param phone must be positive and 10 length
+     * @param address must be not null
+     * @return HttpStatus Created or Bad Request
+     */
     @PostMapping("/create")
     public ResponseEntity<?> makeOrder(Principal principal,
                           @RequestParam(name = "phone") long phone,
@@ -54,6 +67,11 @@ public class OrderController {
     }
 
 
+    /**
+     * Return ALL users Orders with status, only for ADMIN and MANAGER
+     * @param status
+     * @return List<OrderDto>
+     */
     @Secured({"ROLE_ADMIN","ROLE_MANAGER"})
     @PostMapping(value = "/get", produces = "application/json")
     public List<OrderDto> getAllOrdersByStatus(Order.OrderStatus status) {
@@ -64,6 +82,13 @@ public class OrderController {
         }
     }
 
+
+    /**
+     * Update order status by input order.id and new status only for ADMIN and MANAGER
+     * @param id
+     * @param status
+     * @return HttpStatus
+     */
     @Secured({"ROLE_ADMIN","ROLE_MANAGER"})
     @PutMapping("/set_status")
     public ResponseEntity<?> updateStatus(@RequestParam Long id, Order.OrderStatus status) {

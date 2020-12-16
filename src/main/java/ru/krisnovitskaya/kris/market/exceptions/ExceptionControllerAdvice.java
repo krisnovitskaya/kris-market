@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ExceptionControllerAdvice {
     private static final Logger log = LoggerFactory.getLogger(ExceptionControllerAdvice.class);
 
+    /**
+     * catch ResourceNotFoundException
+     * @param e ResourceNotFoundException
+     * @return ResponseEntity
+     */
     @ExceptionHandler
     public ResponseEntity<?> handleResourceNotFoundException(ResourceNotFoundException e) {
         log.error(e.getMessage());
@@ -18,6 +23,11 @@ public class ExceptionControllerAdvice {
         return new ResponseEntity<>(err, HttpStatus.NOT_FOUND);
     }
 
+    /**
+     * catch WrongOrderStatusException
+     * @param e WrongOrderStatusException
+     * @return ResponseEntity
+     */
     @ExceptionHandler
     public ResponseEntity<?> handleWrongStatusException(WrongOrderStatusException e) {
         log.error(e.getMessage());

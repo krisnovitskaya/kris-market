@@ -32,6 +32,13 @@ public class ProductController {
     private final ProductService productService;
     private final CategoryService categoryService;
 
+
+    /**
+     * Return info about active products
+     * @param page number
+     * @param params for create specification
+     * @return PageDto<ProductDto>
+     */
     @GetMapping(produces = "application/json") // /api/v1/products
     public PageDto<ProductDto> getAllProducts(@RequestParam(defaultValue = "1", name = "p") Integer page,
                                               @RequestParam MultiValueMap<String, String> params) {
@@ -44,11 +51,24 @@ public class ProductController {
         return  ppdto;
     }
 
+
+    /**
+     * Return all info about Product with input id
+     * @param id
+     * @return Product or MarketError if Product with id not Found
+     */
     @GetMapping(value = "/{id}", produces = "application/json")
     public Product getProductById(@PathVariable Long id) {
         return productService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to find product with id: " + id));
     }
 
+
+    /**
+     * only for user with ROLE_ADMIN
+     * @param p new Product
+     * @param params includes data about new product categories
+     * @return HttpStatus
+     */
     @Secured("ROLE_ADMIN")
     @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<?> createProduct(@RequestBody Product p, @RequestParam MultiValueMap<String, String> params) {
@@ -69,6 +89,13 @@ public class ProductController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+
+    /**
+     * only for user with ROLE_ADMIN
+     * @param p update Product
+     * @param params includes data about new product categories, or null if categories do not need change
+     * @return HttpStatus
+     */
     @Secured("ROLE_ADMIN")
     @PutMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<?> updateProduct(@RequestBody Product p, @RequestParam MultiValueMap<String, String> params) {
