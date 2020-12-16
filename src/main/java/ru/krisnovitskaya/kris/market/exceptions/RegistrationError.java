@@ -14,13 +14,11 @@ import java.util.stream.Collectors;
 @Data
 public class RegistrationError {
     private int status;
-    //private List<String> messages;
     private String message;
     private Date timestamp;
 
     public RegistrationError(List<ObjectError> errors) {
         this.status = HttpStatus.BAD_REQUEST.value();
-        //this.messages = errors.stream().map(e -> e.getDefaultMessage()).collect(Collectors.toList());
         this.timestamp = new Date();
         StringBuilder sb = new StringBuilder();
         for (ObjectError error : errors) {
@@ -33,7 +31,6 @@ public class RegistrationError {
 
     public RegistrationError(String message) {
         this.status = HttpStatus.BAD_REQUEST.value();
-        //this.messages = new ArrayList<>(Arrays.asList(message));
         this.message = message;
         this.timestamp = new Date();
     }
