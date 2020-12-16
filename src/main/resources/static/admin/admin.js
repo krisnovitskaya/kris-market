@@ -43,7 +43,9 @@ angular.module('app').controller('adminController', function ($scope, $http) {
                         alert('Добавлен новый продукт');
                  }, function errorCallback(response){
                     $scope.newProduct = null;
-                    alert('Product add fail. Wrong input data.');
+                    if(!angular.equals(response.data.message,"")){
+                         alert(response.data.message);
+                    }
                 });
     };
 

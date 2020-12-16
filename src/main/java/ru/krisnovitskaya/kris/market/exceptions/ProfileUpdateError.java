@@ -15,19 +15,22 @@ public class ProfileUpdateError {
     private Date timestamp;
 
     public ProfileUpdateError(List<ObjectError> errors) {
+        this(makeMessage(errors));
+    }
+
+    public ProfileUpdateError(String message) {
         this.status = HttpStatus.BAD_REQUEST.value();
+         this.message = message;
         this.timestamp = new Date();
+    }
+
+
+    private static String makeMessage(List<ObjectError> errors){
         StringBuilder sb = new StringBuilder();
         for (ObjectError error : errors) {
             sb.append(error.getDefaultMessage());
             sb.append("; ");
         }
-        this.message = sb.toString().trim();
-    }
-
-    public ProfileUpdateError(String message) {
-        this.status = HttpStatus.BAD_REQUEST.value();
-        this.message = message;
-        this.timestamp = new Date();
+        return sb.toString().trim();
     }
 }

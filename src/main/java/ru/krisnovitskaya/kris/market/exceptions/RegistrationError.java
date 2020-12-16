@@ -12,25 +12,29 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
-public class RegistrationError {
+public class RegistrationError{
     private int status;
     private String message;
     private Date timestamp;
 
+
     public RegistrationError(List<ObjectError> errors) {
-        this.status = HttpStatus.BAD_REQUEST.value();
-        this.timestamp = new Date();
-        StringBuilder sb = new StringBuilder();
-        for (ObjectError error : errors) {
-            sb.append(error.getDefaultMessage());
-            sb.append("; ");
-        }
-        this.message = sb.toString().trim();
+        this(makeMessage(errors));
     }
 
     public RegistrationError(String message) {
         this.status = HttpStatus.BAD_REQUEST.value();
         this.message = message;
         this.timestamp = new Date();
+    }
+
+
+    private static String makeMessage(List<ObjectError> errors){
+        StringBuilder sb = new StringBuilder();
+        for (ObjectError error : errors) {
+            sb.append(error.getDefaultMessage());
+            sb.append("; ");
+        }
+        return sb.toString().trim();
     }
 }

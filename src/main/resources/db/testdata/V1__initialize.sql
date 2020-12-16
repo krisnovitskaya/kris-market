@@ -10,7 +10,7 @@ create table profiles(
   firstname             varchar(50),
   lastname              varchar(50),
   email                 varchar(255),
-  phone                 int,
+  phone                 bigint,
   birth_year            int,
   sex                   bit,
   town                  varchar(50),
@@ -41,9 +41,9 @@ values
 
 insert into profiles (user_id, firstname, lastname, email, phone, birth_year, sex, town)
 values
-(1, 'Bob', 'White','bob@mail.ru', 1234567, 1980, 1, 'London'),
-(2, 'Elena', 'Sorokina','lenaizpolipropilena@yahoo.com', 7654321, 1985, 0, 'Moscow'),
-(3, 'Robin', 'Bobin','bobinbarabek@yahoo.com', 254321, 1995, 1, 'New-York');
+(1, 'Bob', 'White','bob@mail.ru', 3216547878, 1980, 1, 'London'),
+(2, 'Elena', 'Sorokina','lenaizpolipropilena@yahoo.com', 4951212345, 1985, 0, 'Moscow'),
+(3, 'Robin', 'Bobin','bobinbarabek@yahoo.com', 7896521313, 1995, 1, 'New-York');
 
 
 

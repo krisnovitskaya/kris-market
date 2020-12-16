@@ -28,10 +28,10 @@ public class Profile {
     private String email;
 
     @Column(name = "phone")
-    private int phone;
+    private Long phone;
 
     @Column(name = "birth_year")
-    private int birthYear;
+    private Integer birthYear;
 
     @Column(name = "sex")
     private Boolean sex;
@@ -44,7 +44,7 @@ public class Profile {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public Profile(String firstname, String lastname, String email, int phone, int birthYear, Boolean sex, String town) {
+    public Profile(String firstname, String lastname, String email, Long phone, Integer birthYear, Boolean sex, String town) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;

@@ -27,11 +27,13 @@ angular.module('app').controller('profileController', function ($scope, $http) {
                                 $scope.user.password = null;
                                 alert('Profile has been updated');
                             }, function errorCallback(response){
-                                alert(response.data.message);
+                                if(!angular.equals(response.data.message,"")){
+                                    alert(response.data.message);
+                                }
                                 $scope.user.password = null;
                                 $scope.getProfile();
-                            });
-            }
+            });
+    };
 
 
     $scope.getProfile();

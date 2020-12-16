@@ -29,6 +29,7 @@ public class ProfileController {
 
     /**
      * Returns profile info current authenticated user
+     *
      * @param principal
      * @return ProfileDto
      */
@@ -41,22 +42,28 @@ public class ProfileController {
 
     /**
      * Check input data, current user password and update users profile
+     *
      * @param changedProfile new changedProfile data
      * @param password
      * @param principal
-     * @param bindingResult for Validate input changedProfile data
+     * @param bindingResult  for Validate input changedProfile data
      * @return HttpStatus
      */
-    @PutMapping(produces = "application/json")
-    public ResponseEntity<?> changeProfile(@RequestBody @Validated ProfileDto changedProfile, @RequestParam String password, Principal principal, BindingResult bindingResult) {
+    @PutMapping
+    public ResponseEntity<?> changeProfile(@RequestBody @Validated ProfileDto changedProfile, BindingResult bindingResult, @RequestParam String password, Principal principal) {
         User currentUser = userService.findByUsername(principal.getName()).orElseThrow(() ->
                 new ResourceNotFoundException("Unable to find current user"));
         if (password == null || !encoder.matches(password, currentUser.getPassword())) {
-            ProfileUpdateError err = new ProfileUpdateError("Incorrect or null password");
-            return new ResponseEntity<>(new ProfileUpdateError("Incorrect or null password"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ProfileUpdateError("Incorrect or null password"),HttpStatus.BAD_REQUEST);
+
+        }
+        if(changedProfile.getPhone() != null){
+            if(changedProfile.getPhone() < 0 || String.valueOf(changedProfile.getPhone()).length() != 10){
+                return new ResponseEntity<>(new ProfileUpdateError("Phone must be positive 10-digit number"),HttpStatus.BAD_REQUEST);
+            }
         }
         if (bindingResult.hasErrors()) {
-            return new ResponseEntity<>(new ProfileUpdateError(bindingResult.getAllErrors()), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ProfileUpdateError(bindingResult.getAllErrors()),HttpStatus.BAD_REQUEST);
         }
         Profile profile = currentUser.getProfile();
         profile.updateProfile(changedProfile);
