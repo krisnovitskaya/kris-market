@@ -49,8 +49,8 @@ public class ProfileController {
      * @param bindingResult  for Validate input changedProfile data
      * @return HttpStatus
      */
-    @PutMapping
-    public ResponseEntity<?> changeProfile(@RequestBody @Validated ProfileDto changedProfile, BindingResult bindingResult, @RequestParam String password, Principal principal) {
+    @PutMapping(consumes = "application/json", produces = {"application/json"})
+    public ResponseEntity<ProfileUpdateError> changeProfile(@RequestBody @Validated ProfileDto changedProfile, BindingResult bindingResult, @RequestParam String password, Principal principal) {
         User currentUser = userService.findByUsername(principal.getName()).orElseThrow(() ->
                 new ResourceNotFoundException("Unable to find current user"));
         if (password == null || !encoder.matches(password, currentUser.getPassword())) {
@@ -59,7 +59,9 @@ public class ProfileController {
         }
         if(changedProfile.getPhone() != null){
             if(changedProfile.getPhone() < 0 || String.valueOf(changedProfile.getPhone()).length() != 10){
+                ResponseEntity<ProfileUpdateError> entity = new ResponseEntity<>(new ProfileUpdateError("Phone must be positive 10-digit number"),HttpStatus.BAD_REQUEST);
                 return new ResponseEntity<>(new ProfileUpdateError("Phone must be positive 10-digit number"),HttpStatus.BAD_REQUEST);
+
             }
         }
         if (bindingResult.hasErrors()) {

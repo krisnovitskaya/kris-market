@@ -1,14 +1,15 @@
 package ru.krisnovitskaya.kris.market.exceptions;
 
+import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.ObjectError;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
+
+@Data
 public class ProfileUpdateError {
     private int status;
     private String message;
