@@ -46,15 +46,23 @@ public class ProductService {
         return new PageDto<ProductDto>(content.getContent().stream().map(ProductDto::new).collect(Collectors.toList()), content.getPageable(), content.getTotalElements());
     }
 
+    public Product saveNewProduct(Product product){
+        product.setActive(true);
+        return saveOrUpdate(product);
+    }
+
     public Product saveOrUpdate(Product product) {
         return productRepository.save(product);
     }
+
     public ProductXML getXMLProductById(long id) {
         ProductXML p = new ProductXML();
-        Product product = productRepository.findById(id).get();
+        Product product = productRepository.findOneByID(id).get();
         p.setId(product.getId());
         p.setName(product.getTitle());
         p.setPrice(product.getPrice());
+        List<String> category = product.getCategories().stream().map(Category::getName).collect(Collectors.toList());
+        p.getCategory().addAll(category);
         return p;
     }
 

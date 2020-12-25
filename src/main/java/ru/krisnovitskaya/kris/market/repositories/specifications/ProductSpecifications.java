@@ -20,16 +20,33 @@ public class ProductSpecifications {
         return (Specification<Product>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.like(root.get("title"), String.format("%%%s%%", titlePart));
     }
 
+    public static Specification<Product> isActive() {
+        return (Specification<Product>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.isTrue(root.get("active"));
+    }
 
-    public static Specification<Product> haveCategory(List<String> categories) {
+
+
+    public static Specification<Product> haveCategory(List<Long> categories) {
         return new Specification<Product>() {
             public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
                 criteriaQuery.distinct(true);
                 Join<Product, Category> productCategoryJoin = root.join("categories");
-                return productCategoryJoin.get("name").in(categories);
+                return productCategoryJoin.get("id").in(categories);
             }
         };
     }
 
 
+    /*
+        special for ws. force fetch category. avoid  "failed to lazily initialize... no Session"
+    */
+    public static Specification<Product> fetchCategory(){
+        return new Specification<Product>() {
+            @Override
+            public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                root.fetch("categories", JoinType.INNER);
+                return criteriaBuilder.conjunction();
+            }
+        };
+    }
 }

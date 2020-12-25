@@ -7,8 +7,16 @@
             <input class="form-control" type="text" ng-model="newUser.username" id="newUserName">
         </div>
         <div class="form-group col-md-6">
+            <label for="newUserEmail">E-mail</label>
+            <input class="form-control" type="text" ng-model="newUser.email" id="newUserEmail">
+        </div>
+        <div class="form-group col-md-6">
             <label for="newUserPass">Пароль</label>
             <input class="form-control" type="password" ng-model="newUser.password" id="newUserPass">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="newUserConfPass">Повторите Пароль</label>
+            <input class="form-control" type="password" ng-model="newUser.confirmationPassword" id="newUserConfPass">
         </div>
         <div>
             <button class="btn btn-success" type="submit">Зарегистрироваться</button>

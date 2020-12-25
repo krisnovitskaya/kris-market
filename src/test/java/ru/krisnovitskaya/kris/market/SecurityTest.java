@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles("h2")
+@ActiveProfiles("test")
 public class SecurityTest {
 
     @Autowired
@@ -40,21 +40,14 @@ public class SecurityTest {
 
 
 
-
     @Test
     @WithMockUser(username = "user1", roles = "USER")
-    public void checkAccessToCartWithMockUser() throws Exception {
+    public void checkAccessToCart() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/cart"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
-    @Test
-    public void checkAccessToCartWithOutMockUser() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/cart"))
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isForbidden());
-    }
 
     @Test
     @WithMockUser(username = "user1", roles = "USER")

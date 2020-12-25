@@ -8,57 +8,32 @@ angular.module('app').controller('profileController', function ($scope, $http) {
                     })
                         .then(function (response) {
                             $scope.Profile = response.data;
+
                         });
         }
 
-//    $scope.updateProfile = function() {
-//            $http({
-//                        url: contextPath + '/api/v1/profile',
-//                        method: 'POST',
-//                        params: {
-//                            profile: $scope.Profile,
-//                            changeRequest: $scope.user
-//                        }
-//                    })
-//                      .then(function (response) {
-//                                $scope.Profile = response.data;
-//                                $scope.user.password = null;
-//                            });
-//            }
-
-
-
     $scope.updateProfile = function() {
-            $http({
-                        url: contextPath + '/api/v1/profile',
-                        method: 'POST',
-                        params: {
-                            firstname: $scope.Profile.firstname,
-                            lastname:  $scope.Profile.lastname,
-                            phone:     $scope.Profile.phone,
-                            birthYear: $scope.Profile.birthYear,
-                            sex:       $scope.Profile.sex,
-                            town:      $scope.Profile.town,
-                            password:  $scope.user.password
-                        }
-                    })
-                      .then(function (response) {
-                                $scope.Profile = response.data;
+          $http({
+                    url: contextPath + '/api/v1/profile',
+                    method: 'PUT',
+                    data: $scope.Profile,
+                    params:{
+                        password:  $scope.user.password
+                    }
+                })
+                   .then(
+                            function successCallback(response) {
+                                $scope.getProfile();
                                 $scope.user.password = null;
-                            });
-            }
-
-
-
-
-//    $scope.updateProfile = function() {
-//          $http.post(contextPath + '/api/v1/profile', $scope.Profile, $scope.user)
-//                          .then(function (response) {
-//                                $scope.Profile = response.data;
-//                                $scope.password = null;
-//                            });
-//            }
-
+                                alert('Profile has been updated');
+                            }, function errorCallback(response){
+                                if(!angular.equals(response.data.message,"")){
+                                    alert(response.data.message);
+                                }
+                                $scope.user.password = null;
+                                $scope.getProfile();
+            });
+    };
 
 
     $scope.getProfile();

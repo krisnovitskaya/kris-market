@@ -1,4 +1,4 @@
-angular.module('app').controller('cartController', function ($scope, $http) {
+angular.module('app').controller('cartController', function ($scope, $http, $localStorage, $location) {
     const contextPath = 'http://localhost:8189/market';
 
 
@@ -11,11 +11,13 @@ angular.module('app').controller('cartController', function ($scope, $http) {
                             address: $scope.newOrder.address
                         }
                     })
-                        .then(function (response) {
-                            console.log("ok");
+                        .then( function successCallback(response) {
                             $scope.newOrder = null;
                             $scope.cartContentRequest();
-                        });
+                            $location.url('/orders');
+                        }, function errorCallback(response){
+                            alert(response.data.message);
+                    });
         };
 
 
@@ -59,6 +61,7 @@ angular.module('app').controller('cartController', function ($scope, $http) {
                 $scope.cartContentRequest();
             });
     };
+
 
     $scope.cartContentRequest();
 

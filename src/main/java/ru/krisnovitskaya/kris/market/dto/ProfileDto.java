@@ -7,24 +7,33 @@ import ru.krisnovitskaya.kris.market.entities.Profile;
 import ru.krisnovitskaya.kris.market.entities.User;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 @Data
 @NoArgsConstructor
 public class ProfileDto {
 
-    private Long id;
+
     private String firstname;
     private String lastname;
-    private int phone;
-    private int birthYear;
-    private String sex;
+
+    @Email(message = "wrong email format")
+    private String email;
+
+    @Positive(message = "number must be positive")
+    private Long phone;
+
+    private Integer birthYear;
+
+    private Boolean sex;
+
     private String town;
 
 
     public ProfileDto(Profile profile) {
-        this.id = profile.getId();
         this.firstname = profile.getFirstname();
         this.lastname = profile.getLastname();
+        this.email = profile.getEmail();
         this.phone = profile.getPhone();
         this.birthYear = profile.getBirthYear();
         this.sex = profile.getSex();

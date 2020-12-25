@@ -19,6 +19,12 @@ public class OrderEndpoint {
         this.orderService = orderService;
     }
 
+
+    /**
+     * Return info about all orders by input username
+     * @param request GetUserOrdersRequest soap
+     * @return GetUserOrdersResponse
+     */
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getUserOrdersRequest")
     @ResponsePayload
     public GetUserOrdersResponse getOrdersByUsername(@RequestPayload GetUserOrdersRequest request) {

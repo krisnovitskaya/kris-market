@@ -2,6 +2,7 @@ package ru.krisnovitskaya.kris.market.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.krisnovitskaya.kris.market.dto.ProfileDto;
 
 import javax.persistence.*;
 import java.util.Map;
@@ -23,14 +24,17 @@ public class Profile {
     @Column(name = "lastname")
     private String lastname;
 
+    @Column(name = "email")
+    private String email;
+
     @Column(name = "phone")
-    private int phone;
+    private Long phone;
 
     @Column(name = "birth_year")
-    private int birthYear;
+    private Integer birthYear;
 
     @Column(name = "sex")
-    private String sex;
+    private Boolean sex;
 
     @Column(name = "town")
     private String town;
@@ -40,13 +44,25 @@ public class Profile {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public Profile(String firstname, String lastname, int phone, int birthYear, String sex, String town) {
+    public Profile(String firstname, String lastname, String email, Long phone, Integer birthYear, Boolean sex, String town) {
         this.firstname = firstname;
         this.lastname = lastname;
+        this.email = email;
         this.phone = phone;
         this.birthYear = birthYear;
         this.sex = sex;
         this.town = town;
+    }
+
+    public Profile updateProfile(ProfileDto profileDto){
+        this.setEmail(profileDto.getEmail());
+        this.setBirthYear(profileDto.getBirthYear());
+        this.setFirstname(profileDto.getFirstname());
+        this.setLastname(profileDto.getLastname());
+        this.setPhone(profileDto.getPhone());
+        this.setSex(profileDto.getSex());
+        this.setTown(profileDto.getTown());
+        return this;
     }
 
 

@@ -2,37 +2,44 @@ package ru.krisnovitskaya.kris.market.controllers;
 
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.krisnovitskaya.kris.market.entities.Profile;
-import ru.krisnovitskaya.kris.market.entities.Role;
-import ru.krisnovitskaya.kris.market.entities.User;
-import ru.krisnovitskaya.kris.market.services.ProfileService;
-import ru.krisnovitskaya.kris.market.services.RoleService;
+import ru.krisnovitskaya.kris.market.dto.NewUserDto;
+import ru.krisnovitskaya.kris.market.exceptions.RegistrationError;
+
 import ru.krisnovitskaya.kris.market.services.UserService;
-
-
-import java.util.HashSet;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/reg")
 public class RegistrationController {
     private final UserService userService;
-    private final RoleService roleService;
-    private final ProfileService profileService;
-    private final BCryptPasswordEncoder encoder;
 
 
-
-    @PostMapping(consumes = "application/json", produces = "application/json")
-    public void saveNewUser(@RequestBody User user){
-        Role role = roleService.findByName("ROLE_USER");
-        user.setPassword(encoder.encode(user.getPassword()));
-        user.setRoles(new HashSet<>() {{ add(role);}});
-        Profile profile = new Profile();
-        user.setProfile(profile);
-        profile.setUser(user);
-        userService.save(user);
+    /**
+     * Check input data and create new user
+     * @param newUser
+     * @param bindingResult
+     * @return HttpStatus
+     */
+    @PostMapping
+    public ResponseEntity<?> registerNewUser(@RequestBody @Validated NewUserDto newUser, BindingResult bindingResult) {
+        if(newUser.getUsername() == null || newUser.getEmail() == null || newUser.getPassword() == null || newUser.getConfirmationPassword() == null){
+            return new ResponseEntity<>(new RegistrationError("Some fields are empty."), HttpStatus.BAD_REQUEST);
+        }
+        if (userService.findByUsername(newUser.getUsername()).isPresent()) {
+            return new ResponseEntity<>(new RegistrationError("Username " + newUser.getUsername() + " is busy"), HttpStatus.BAD_REQUEST);
+        }
+        if (!newUser.getPassword().equals(newUser.getConfirmationPassword())) {
+            return new ResponseEntity<>(new RegistrationError("Password and confirmed password isn't equal"), HttpStatus.BAD_REQUEST);
+        }
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>(new RegistrationError(bindingResult.getAllErrors()), HttpStatus.BAD_REQUEST);
+        }
+        userService.saveUserFromDtoAsEntity(newUser);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

@@ -48,6 +48,7 @@ angular.module('app').controller('storeController', function ($scope, $http) {
         }
         return arr;
     }
+
     $scope.getCategories();
     $scope.fillTable();
 

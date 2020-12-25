@@ -1,4 +1,4 @@
-angular.module('app').controller('authController', function ($scope, $http, $localStorage) {
+angular.module('app').controller('authController', function ($scope, $http, $localStorage, $location, jwtHelper) {
     const contextPath = 'http://localhost:8189/market';
 
     $scope.tryToAuth = function () {
@@ -27,6 +27,7 @@ angular.module('app').controller('authController', function ($scope, $http, $loc
         if ($scope.user.password) {
             $scope.user.password = null;
         }
+            $location.url('/auth');
     };
 
     $scope.clearUser = function () {
@@ -41,4 +42,30 @@ angular.module('app').controller('authController', function ($scope, $http, $loc
             return false;
         }
     };
+
+     $scope.getUserRole = function() {
+            tokenPayload = jwtHelper.decodeToken($localStorage.currentUser.token);
+            $scope.userRoles = tokenPayload.roles;
+        };
+
+
+        $scope.isAdmin = function () {
+            $scope.getUserRole();
+            for (let i = 0; i < $scope.userRoles.length; i++ ){
+                if(angular.equals("ROLE_ADMIN", $scope.userRoles[i])){
+                    return true;
+                }
+            }
+            return false;
+        }
+
+     $scope.isManager = function () {
+                 $scope.getUserRole();
+                 for (let i = 0; i < $scope.userRoles.length; i++ ){
+                     if(angular.equals("ROLE_MANAGER", $scope.userRoles[i])){
+                         return true;
+                     }
+                 }
+                 return false;
+             }
 });

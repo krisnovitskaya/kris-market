@@ -107,27 +107,7 @@ values
 ('Asparagus', 280, 1),
 ('Beets', 198, 1),
 ('Turnip', 141, 1),
-('Ginger', 299, 1),
-('Potato 2', 40, 1),
-('Tomato 2', 170, 1),
-('Carrot 2', 50, 1),
-('Cabbage 2', 45, 1),
-('Pepper 2', 195, 1),
-('Chili pepper 2', 200, 1),
-('Eggplant 2', 210, 1),
-('Cauliflower 2', 180, 1),
-('Onion 2', 35, 1),
-('Garlic 2', 160, 1),
-('Parsley 2', 135, 1),
-('Celery 2', 135, 1),
-('Radish 2', 55, 1),
-('Cucumber 2', 160, 1),
-('Pumpkin 2', 195, 1),
-('Courgette 2', 160, 1),
-('Asparagus 2', 290, 1),
-('Beets 2', 199, 1),
-('Turnip 2', 145, 1),
-('Ginger 2', 300, 1);
+('Ginger', 299, 1);
 
 insert into products_categories (product_id, category_id)
 values
@@ -136,12 +116,7 @@ values
 (6, 1), (7, 2), (8, 3), (8, 4),
 (9, 1), (10, 2), (11, 3), (12, 4),
 (13, 1), (14, 2), (15, 3), (16, 4),
-(17, 1), (18, 2), (19, 3), (20, 4),
-(21, 1), (22, 2), (23, 3), (24, 4),
-(25, 1), (26, 2), (27, 3), (28, 4),
-(29, 1), (30, 2), (31, 3), (32, 4),
-(33, 1), (34, 2), (35, 3), (36, 4),
-(37, 1), (38, 2), (39, 3), (40, 4);
+(17, 1), (18, 2), (19, 3), (20, 4);
 
 
 CREATE TYPE order_status AS ENUM('NEW', 'IN_PROGRESS', 'DONE');
@@ -164,14 +139,3 @@ create table order_items (
     quantity                int
 );
 
-insert into orders (user_id, price, address, phone, status)
-values
-(1, 200, 'address 1', 123456, 'DONE'),
-(1, 190, 'address 1', 123456, 'IN_PROGRESS');
-
-
-insert into order_items (product_id, order_id, price, price_per_product, quantity)
-values
-(7, 1, 200, 200, 1),
-(1, 2, 30, 30, 1),
-(2, 2, 160, 160, 1);

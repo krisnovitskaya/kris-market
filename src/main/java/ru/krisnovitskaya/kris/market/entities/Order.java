@@ -23,8 +23,8 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @OneToMany(mappedBy = "order")
+    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
     private List<OrderItem> items;
 
     @Column(name = "price")
@@ -34,19 +34,32 @@ public class Order {
     private String address;
 
     @Column(name = "phone")
-    private int phone;
+    private long phone;
 
-    public Order(User user, Cart cart, String address, int phone) {
+
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
+
+    public Order(User user, Cart cart, String address, long phone) {
         this.user = user;
         this.price = cart.getPrice();
         this.items = new ArrayList<>();
         this.address = address;
         this.phone = phone;
+        this.status = OrderStatus.NEW;
         cart.getItems().forEach(oi -> {
             oi.setOrder(this);
             items.add(oi);
         });
         cart.clear();
+    }
+
+
+    public static enum OrderStatus {
+        NEW,
+        IN_PROGRESS,
+        DONE
     }
 
 }

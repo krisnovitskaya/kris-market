@@ -6,15 +6,23 @@
             <td>Цена</td>
             <td>Адрес</td>
             <td>Телефон</td>
-        </tr>
-        <tbody>
+            <td>Статус</td>
+            <td>Состав заказа</td>
 
+        </tr>
+
+        <tbody>
         <tr ng-repeat="o in Orders">
             <td>{{o.id}}</td>
             <td>{{o.price}}</td>
             <td>{{o.address}}</td>
             <td>{{o.phone}}</td>
-
+            <td>{{o.status}}</td>
+            <td>{{o.items.length}}&emsp;Позиций всего:
+                <ul>
+                    <li ng-repeat="i in o.items" style="list-style-type: none;">{{i.quantity}}&emsp;{{i.productTitle}}</li>
+                </ul>
+            </td>
         </tr>
         </tbody>
     </table>

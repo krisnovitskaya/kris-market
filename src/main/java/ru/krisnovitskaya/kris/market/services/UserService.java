@@ -7,24 +7,42 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.krisnovitskaya.kris.market.dto.NewUserDto;
+import ru.krisnovitskaya.kris.market.entities.Profile;
 import ru.krisnovitskaya.kris.market.entities.Role;
 import ru.krisnovitskaya.kris.market.entities.User;
 import ru.krisnovitskaya.kris.market.repositories.UserRepository;
 
-import java.util.Collection;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class UserService implements UserDetailsService {
-    private final UserRepository userRepository;
+    private UserRepository userRepository;
+    private RoleService roleService;
+    private PasswordEncoder passwordEncoder;
 
-    public Optional<User> findByUsername(String username) {
-        return userRepository.getOneByUsername(username);
+
+
+    @Autowired
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
+
+    @Autowired
+    public void setRoleService(RoleService roleService) {
+        this.roleService = roleService;
+    }
+
+    @Autowired
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
+
 
     @Override
     @Transactional
@@ -37,7 +55,23 @@ public class UserService implements UserDetailsService {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
 
+    public Optional<User> findByUsername(String username) {
+        return userRepository.getOneByUsername(username);
+    }
+
     public User save(User user) {
         return userRepository.save(user);
+    }
+
+    public void saveUserFromDtoAsEntity(NewUserDto newUser) {
+        User user = new User();
+        user.setUsername(newUser.getUsername());
+        user.setPassword(passwordEncoder.encode(newUser.getPassword()));
+        Profile profile = new Profile();
+        user.setProfile(profile);
+        profile.setUser(user);
+        user.setRoles(Collections.singletonList(roleService.findByName("ROLE_USER")));
+        profile.setEmail(newUser.getEmail());
+        save(user);
     }
 }
