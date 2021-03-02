@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.krisnovitskaya.kris.market.dto.NewUserDto;
+import ru.krisnovitskaya.kris.market.entities.Authority;
 import ru.krisnovitskaya.kris.market.entities.Profile;
 import ru.krisnovitskaya.kris.market.entities.Role;
 import ru.krisnovitskaya.kris.market.entities.User;
@@ -52,7 +53,11 @@ public class UserService implements UserDetailsService {
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+        Set<String> set = roles.stream().flatMap(role -> role.getAuthorities().stream().map(Authority::getTitle)).collect(Collectors.toSet());
+        roles.forEach(role -> set.add(role.getName()));
+        List<SimpleGrantedAuthority> authorityList = set.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        System.out.println(authorityList);
+                return authorityList;
     }
 
     public Optional<User> findByUsername(String username) {
