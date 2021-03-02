@@ -60,6 +60,44 @@ values
 (3, 3),
 (3, 2);
 
+create table authorities (
+    id      serial primary key,
+    title   varchar(100)
+);
+
+insert into authorities (title)
+values
+('READABLE'),
+('EDITABLE'),
+('WRITABLE'),
+('CREATABLE'),
+('MOVABLE'),
+('ERASABLE');
+
+
+
+create table roles_authorities(
+      role_id               int not null,
+      authority_id        int not null,
+      primary key (role_id, authority_id),
+      foreign key (authority_id) references authorities (id),
+      foreign key (role_id) references roles (id)
+);
+
+insert into roles_authorities (role_id, authority_id)
+values
+(1, 1),
+(1, 4),
+(2, 1),
+(2, 2),
+(2, 4),
+(2, 5),
+(3, 1),
+(3, 2),
+(3, 3),
+(3, 4),
+(3, 5),
+(3, 6);
 
 create table products (
     id                      bigserial primary key,
